@@ -1,0 +1,22 @@
+(lang dune 3.10)
+
+(name backend)
+
+(generate_opam_files true)
+
+(source
+ (github Favo02/cess-advisor))
+
+(authors "Luca Favini")
+
+(maintainers "Luca Favini")
+
+(license CC-BY-4.0)
+
+(documentation https://github.com/Favo02/cess-advisor)
+
+(package
+ (name backend)
+ (synopsis "REST API for Cess Advisor")
+ (description "REST API for Cess Advisor, a toilet review system")
+ (depends ocaml dune sihl))
