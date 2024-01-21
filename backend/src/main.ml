@@ -1,25 +1,20 @@
 open Sihl
 
-let hello_handler (_ : Rock.Request.t) : Rock.Response.t Lwt.t =
-  let json =
-    `Assoc [("message", `String "Hello, World!")]
-  in
-  Opium.Response.of_json json
-  |> Lwt.return
-
 let routes : Web.router = {
   scope = "/api/";
   routes = [
 
-    (Web.Get, "/", hello_handler);
+    (Web.Post, "/login", Auth.post_login);
 
   ];
 
-  middlewares = [];
+  middlewares = [
+    Sihl.Web.Middleware.error ()
+  ];
 }
 
 let services = [
-  (* Sihl.Database.register (); *)
+  Sihl.Database.register ();
   Sihl.Web.Http.register routes
 ]
 
