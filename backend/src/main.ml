@@ -17,7 +17,13 @@ let protected_routes = Web.choose
     Web.get "/user/me" Handlers.Users.me;
   ]
 
-let router = Web.choose ~scope: "/api/" [ unprotected_routes; protected_routes ]
+let router = Web.choose
+  ~scope: "/api/"
+  ~middlewares: [ Web.Middleware.error () ]
+  [
+    unprotected_routes;
+    protected_routes
+  ]
 
 let services = [
   Database.register ();
