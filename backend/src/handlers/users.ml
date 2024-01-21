@@ -9,4 +9,4 @@ let me req =
       ("id", `String user_id);
       ("username", `String username)
     ])
-  | _ -> error 401 "unauthorized" "not logged in"
+  | _ -> unauthorized ()

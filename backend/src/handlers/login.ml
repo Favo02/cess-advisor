@@ -42,7 +42,7 @@ let login req =
       ] (Opium.Response.of_json json)
       |> Lwt.return
 
-    | None -> error 401 "unauthorized" "invalid username or password"
+    | None -> unauthorized ()
   with _ -> error 400 "invalid request" "invalid json body"
 
 let logout _ =
