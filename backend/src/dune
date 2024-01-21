@@ -1,5 +1,4 @@
 (executable
  (name main)
  (public_name main)
- (libraries sihl caqti-driver-postgresql)
- (preprocess (pps lwt_ppx ppx_yojson_conv)))
+ (libraries common handlers sihl caqti-driver-postgresql))
