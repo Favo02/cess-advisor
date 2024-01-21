@@ -1,3 +1,6 @@
+open Common.Utils
+open Lwt.Infix
+
 module Query = struct
   open Caqti_request.Infix
   open Caqti_type.Std
@@ -7,19 +10,6 @@ module Query = struct
     "SELECT id FROM users WHERE username = ? AND password = ?"
 end
 
-module Run_query = struct
-  open Lwt.Infix
-
-  let find_user username password =
-    let%lwt user = Sihl.Database.find_opt Query.find_user (username, password) in
-
-    Lwt.return user >>= function
-    | Some user_id ->
-      let json = `Assoc [("message", `String ("Hello, " ^ user_id))] in
-      Opium.Response.of_json json |> Lwt.return
-    | None -> Common.Utils.error 401 "unauthorized" "invalid username or password"
-end
-
 module Models = struct
   type user = {
     username : string;
@@ -27,10 +17,36 @@ module Models = struct
   } [@@deriving yojson]
 end
 
+(* shorthands *)
+module DB = Sihl.Database
+module Q = Query
+
 (* FIXME: error 500 (Yojson.Json_error) when Multipart Form sent *)
-let post_login (req : Rock.Request.t) : Rock.Response.t Lwt.t =
+let login req =
   try
     let%lwt body = Opium.Request.to_json_exn req in
-    let json = Models.user_of_yojson body in
-    Run_query.find_user json.username json.password
-  with _ -> Common.Utils.error 400 "invalid request" "invalid json body"
+    let body_json = Models.user_of_yojson body in
+
+    let%lwt user = DB.find_opt Q.find_user (body_json.username, body_json.password) in
+
+    Lwt.return user >>= function
+    | Some user_id ->
+      let json = `Assoc [
+        ("message",   `String "login successful");
+        ("id",        `String user_id);
+        ("username",  `String body_json.username);
+      ] in
+      Sihl.Web.Session.set [
+        ("id",        user_id);
+        ("username",  body_json.username);
+      ] (Opium.Response.of_json json)
+      |> Lwt.return
+
+    | None -> error 401 "unauthorized" "invalid username or password"
+  with _ -> error 400 "invalid request" "invalid json body"
+
+let logout _ =
+  let json = `Assoc [("message", `String "logout ok")] in
+  let resp = Opium.Response.of_json json in
+  Sihl.Web.Session.set [] resp
+  |> Lwt.return
