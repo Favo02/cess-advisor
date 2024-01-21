@@ -5,16 +5,17 @@ let unprotected_routes = Web.choose
   ~scope: "/"
   ~middlewares: []
   [
-    Web.get "/version" (simple_handler "version" "0.0.1");
-    Web.post "/login" Handlers.Login.login;
-    Web.post "/logout" Handlers.Login.logout;
+    Web.get   "/version"          (simple_handler "version" "0.0.1");
+    Web.post  "/login"            Handlers.Login.login;
+    Web.post  "/logout"           Handlers.Login.logout;
+    Web.post  "/user/register"    Handlers.Users.create;
   ]
 
 let protected_routes = Web.choose
-  ~scope: "/auth/"
+  ~scope: "/"
   ~middlewares: [ Middlewares.require_login ]
   [
-    Web.get "/user/me" Handlers.Users.me;
+    Web.get   "/user/me"          Handlers.Users.me;
   ]
 
 let router = Web.choose
