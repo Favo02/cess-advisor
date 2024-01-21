@@ -12,7 +12,7 @@ let unprotected_routes = Web.choose
 
 let protected_routes = Web.choose
   ~scope: "/auth/"
-  ~middlewares: []
+  ~middlewares: [ Middlewares.require_login ]
   [
     Web.get "/user/me" Handlers.Users.me;
   ]
