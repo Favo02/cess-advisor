@@ -17,7 +17,7 @@ module Run_query = struct
     | Some user_id ->
       let json = `Assoc [("message", `String ("Hello, " ^ user_id))] in
       Opium.Response.of_json json |> Lwt.return
-    | None -> Utils.error 401 "unauthorized" "invalid username or password"
+    | None -> Common.Utils.error 401 "unauthorized" "invalid username or password"
 end
 
 module Models = struct
@@ -33,4 +33,4 @@ let post_login (req : Rock.Request.t) : Rock.Response.t Lwt.t =
     let%lwt body = Opium.Request.to_json_exn req in
     let json = Models.user_of_yojson body in
     Run_query.find_user json.username json.password
-  with _ -> Utils.error 400 "invalid request" "invalid json body"
+  with _ -> Common.Utils.error 400 "invalid request" "invalid json body"
