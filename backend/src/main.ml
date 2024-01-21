@@ -1,21 +1,26 @@
 open Sihl
 
-let routes : Web.router = {
-  scope = "/api/";
-  routes = [
+let unprotected_routes = Web.choose
+  ~scope: "/"
+  ~middlewares: []
+  [
+    Web.get "/version" (Common.Utils.simple_handler "version" "0.0.1");
+    (* Web.get "/login" (Common.Utils.simple_handler "TODO" "TODO"); *)
+    (* Web.get "/logout" (Common.Utils.simple_handler "TODO" "TODO"); *)
+  ]
 
-    (Web.Post, "/login", Auth.post_login);
+let protected_routes = Web.choose
+  ~scope: "/auth/"
+  ~middlewares: []
+  [
+    Web.get "/user/me" (Common.Utils.simple_handler "TODO" "TODO");
+  ]
 
-  ];
-
-  middlewares = [
-    Sihl.Web.Middleware.error ()
-  ];
-}
+let router = Web.choose ~scope: "/api/" [ unprotected_routes; protected_routes ]
 
 let services = [
-  Sihl.Database.register ();
-  Sihl.Web.Http.register routes
+  Database.register ();
+  Web.Http.register router;
 ]
 
 let () = App.(empty |> with_services services |> run)
