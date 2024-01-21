@@ -1,5 +1,4 @@
 open Common.Utils
-open Lwt.Infix
 
 module Query = struct
   open Caqti_request.Infix
@@ -28,8 +27,7 @@ let login req =
     let body_json = Models.user_of_yojson body in
 
     let%lwt user = DB.find_opt Q.find_user (body_json.username, body_json.password) in
-
-    Lwt.return user >>= function
+    match user with
     | Some user_id ->
       let json = `Assoc [
         ("message",   `String "login successful");
