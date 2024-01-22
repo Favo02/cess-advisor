@@ -2,7 +2,7 @@ open Common.Utils
 
 let require_login =
   let require_login next req =
-    let user_id = Sihl.Web.Session.find "user_id" req in
+    let user_id = Sihl.Web.Session.find "id" req in
     match user_id with
     | Some _ -> next req
     | None -> unauthorized ()
