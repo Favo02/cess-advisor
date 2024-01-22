@@ -5,7 +5,7 @@ let unprotected_routes = Web.choose
   ~scope: "/"
   ~middlewares: []
   [
-    Web.get   "/version"          (simple_handler "version" "0.0.1");
+    Web.get   "/version"          (simple_handler 200 [("version", "0.0.1")]);
     Web.post  "/login"            Handlers.Login.login;
     Web.post  "/logout"           Handlers.Login.logout;
     Web.post  "/user/register"    Handlers.Users.create;
