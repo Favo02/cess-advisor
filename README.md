@@ -18,7 +18,7 @@ This project follows the following **commit convention**: `<type>(<part>/<scope>
     - `utils`: utility module
   - `fe/`: frontend
     - `components`: components
-    - `pages`: pages
+    - `pages`: pages _(routing)_
   - `db/`: database
     - `tables`: tables
   - `repo`: repository _(omit scope)_
