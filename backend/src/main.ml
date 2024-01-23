@@ -1,29 +1,39 @@
 open Sihl
 open Common.Utils
 
-let unprotected_routes = Web.choose
+(* routes accessible to everyone *)
+let public_routes = Web.choose
   ~scope: "/"
   ~middlewares: []
   [
     Web.get   "/version"          (simple_handler 200 [("version", "0.0.1")]);
+  ]
+
+(* routes accessible only to users not logged in *)
+let no_auth_routes = Web.choose
+  ~scope: "/"
+  ~middlewares: [ Middlewares.require_no_login ]
+  [
     Web.post  "/login"            Handlers.Login.login;
-    Web.post  "/logout"           Handlers.Login.logout;
     Web.post  "/user/register"    Handlers.Users.create;
   ]
 
-let protected_routes = Web.choose
+(* routes accessible only to logged users *)
+let auth_routes = Web.choose
   ~scope: "/"
   ~middlewares: [ Middlewares.require_login ]
   [
     Web.get   "/user/me"          Handlers.Users.me;
+    Web.post  "/logout"           Handlers.Login.logout;
   ]
 
 let router = Web.choose
   ~scope: "/api/"
   ~middlewares: [ Web.Middleware.error () ]
   [
-    unprotected_routes;
-    protected_routes
+    public_routes;
+    no_auth_routes;
+    auth_routes;
   ]
 
 let services = [
