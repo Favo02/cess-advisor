@@ -1,7 +1,11 @@
 {
   "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
+  "description": "Vite + React frontend for Cess Advisor, a toilet review system",
+  "version": "0.0.1",
+  "license": "CC-BY-4.0",
+  "repository": "https://github.com/Favo02/cess-advisor",
+  "homepage": "https://github.com/Favo02/cess-advisor",
+  "author": "Luca Favini",
   "type": "module",
   "scripts": {
     "dev": "vite",
