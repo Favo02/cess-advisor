@@ -16,5 +16,49 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-spacing": [
+      "error",
+      {
+        "after": true,
+        "before": true
+      }
+    ],
+    "camelcase": "error",
+    "eol-last": 1,
+    "eqeqeq": "error",
+    "indent": ["error", 2],
+    "key-spacing": [
+      "error",
+      {
+        "afterColon": true,
+        "beforeColon": false
+      }
+    ],
+    "linebreak-style": ["error", "unix"],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "quotes": ["error", "double"],
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "afterOpening": "never",
+        "beforeClosing": "never",
+        "beforeSelfClosing": "always",
+        "closingSlash": "never"
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "semi": ["error", "never"],
+    "comma-dangle": ["error", "never"],
+    "react-hooks/exhaustive-deps": "error",
+    "react/prop-types": "off"
   },
 }
