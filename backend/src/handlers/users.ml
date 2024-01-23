@@ -42,18 +42,15 @@ let create req =
     let%lwt username_valid = DB.find Q.check_username_free body_json.username in
     match username_valid with
     | false ->
-      (* TODO: create Session.set util, like return utility *)
       let%lwt user_id = DB.find Q.create_user (body_json.username, body_json.password) in
-      let json = `Assoc [
-        ("message",   `String "user created");
-        ("id",        `String user_id);
-        ("username",  `String body_json.username);
-      ] in
-      Sihl.Web.Session.set [
+      session_return 201 [
+        ("message",   "user created");
         ("id",        user_id);
         ("username",  body_json.username);
-      ] (Opium.Response.of_json json)
-      |> Lwt.return
+      ] [
+        ("id",        user_id);
+        ("username",  body_json.username);
+      ]
 
     | _ -> error 400 "invalid username" "username already taken"
   with _ -> invalid_request ()

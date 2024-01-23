@@ -11,6 +11,14 @@ let error status err message = return status [
   ("message", message)
 ]
 
+(* same as return, but also sets ~session *)
+let session_return (status : int) (json : (string * string) list) (session : (string * string) list) =
+  Opium.Response.of_json
+    ?status: (Some (Opium.Status.of_code status))
+    (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
+  |> Sihl.Web.Session.set session
+  |> Lwt.return
+
 (* return a simple request handler that returns ~status and ~json *)
 let simple_handler status json =
   fun _ -> return status json

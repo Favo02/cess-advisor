@@ -29,24 +29,16 @@ let login req =
     let%lwt user = DB.find_opt Q.find_user (body_json.username, body_json.password) in
     match user with
     | Some user_id ->
-      (* TODO: create Session.set util, like return utility *)
-      let json = `Assoc [
-        ("message",   `String "login successful");
-        ("id",        `String user_id);
-        ("username",  `String body_json.username);
-      ] in
-      Sihl.Web.Session.set [
+      session_return 200 [
+        ("message",   "login successful");
         ("id",        user_id);
         ("username",  body_json.username);
-      ] (Opium.Response.of_json json)
-      |> Lwt.return
+      ] [
+        ("id",        user_id);
+        ("username",  body_json.username);
+      ]
 
     | None -> unauthorized ()
   with _ -> invalid_request ()
 
-let logout _ =
-  (* TODO: create Session.set util, like return utility *)
-  let json = `Assoc [("message", `String "logout ok")] in
-  let resp = Opium.Response.of_json json in
-  Sihl.Web.Session.set [] resp
-  |> Lwt.return
+let logout _ = session_return 200 [("message", "logout successful")] []
