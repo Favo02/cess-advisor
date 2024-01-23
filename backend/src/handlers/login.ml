@@ -42,3 +42,5 @@ let login req =
   with _ -> invalid_request ()
 
 let logout _ = session_return 200 [("message", "logout successful")] []
+
+let verify _ = return 200 [("message", "valid login")]

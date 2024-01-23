@@ -23,6 +23,7 @@ let auth_routes = Web.choose
   ~scope: "/"
   ~middlewares: [ Middlewares.require_login ]
   [
+    Web.get   "/login/verify"     Handlers.Login.verify;
     Web.get   "/user/me"          Handlers.Users.me;
     Web.post  "/logout"           Handlers.Login.logout;
   ]
