@@ -38,7 +38,7 @@ let login req =
         ("username",  body_json.username);
       ]
 
-    | None -> unauthorized ()
+    | None -> error 401 "unauthorized" "invalid username or password"
   with _ -> invalid_request ()
 
 let logout _ = session_return 200 [("message", "logout successful")] []
