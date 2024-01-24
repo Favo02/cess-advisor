@@ -15,7 +15,7 @@ let no_auth_routes = Web.choose
   ~middlewares: [ Middlewares.require_no_login ]
   [
     Web.post  "/login"            Handlers.Login.login;
-    Web.post  "/user/register"    Handlers.Users.create;
+    Web.post  "/users/create"     Handlers.Users.create;
   ]
 
 (* routes accessible only to logged users *)
@@ -24,7 +24,7 @@ let auth_routes = Web.choose
   ~middlewares: [ Middlewares.require_login ]
   [
     Web.get   "/login/verify"     Handlers.Login.verify;
-    Web.get   "/user/me"          Handlers.Users.me;
+    Web.get   "/users/me"         Handlers.Users.me;
     Web.post  "/logout"           Handlers.Login.logout;
   ]
 
