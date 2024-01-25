@@ -23,6 +23,6 @@ let verify_expiration =
     let expiration = Sihl.Web.Session.find "expiration" req in
     match expiration with
     | Some exp when float_of_string exp > Unix.time () -> next req
-    | _ -> error 401 "unauthorized" "session expired"
+    | _ -> session_error 401 "unauthorized" "session expired" []
   in
   Rock.Middleware.create ~filter: verify_expiration ~name: "check expiration date"
