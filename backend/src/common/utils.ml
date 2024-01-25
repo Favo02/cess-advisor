@@ -1,10 +1,10 @@
-(* return a session adding expiration time *)
-let append_expiration session =
+(* return a list appending expiration time (current epoch + 1h) *)
+let append_expiration list =
   let expiration_epoch =
     Unix.time () +. 3600.
     |> int_of_float
     |> Printf.sprintf "%d"
-  in ("expiration", expiration_epoch) :: session
+  in ("expiration", expiration_epoch) :: list
 
 (* send an HTTP response with ~status and ~json payload *)
 let return (status : int) (json : (string * string) list) =
