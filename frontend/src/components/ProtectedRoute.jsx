@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import loginService from "@/services/login"
+import { toast } from "@/components/ui/use-toast"
 
 const ProtectedRoute = ({ children }) => {
 
@@ -13,7 +14,11 @@ const ProtectedRoute = ({ children }) => {
         await loginService.verify()
         setAuth(true)
       }
-      catch (err) {
+      catch (e) {
+        toast({
+          title: "Not authorized",
+          description: e?.response?.data?.message || "Something went wrong"
+        })
         setAuth(false)
       }
       finally {
