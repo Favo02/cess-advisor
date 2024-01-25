@@ -21,7 +21,7 @@ let no_auth_routes = Web.choose
 (* routes accessible only to logged users *)
 let auth_routes = Web.choose
   ~scope: "/"
-  ~middlewares: [ Middlewares.require_login ]
+  ~middlewares: [ Middlewares.require_login; Middlewares.verify_expiration ]
   [
     Web.get   "/login/verify"     Handlers.Login.verify;
     Web.get   "/users/me"         Handlers.Users.me;
