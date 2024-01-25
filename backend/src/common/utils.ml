@@ -13,12 +13,6 @@ let return (status : int) (json : (string * string) list) =
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
   |> Lwt.return
 
-(* same as return but with fixed json payload fiels "error" and "message" *)
-let error status err message = return status [
-  ("error", err);
-  ("message", message)
-]
-
 (* same as return, but also sets ~session *)
 let session_return (status : int) (json : (string * string) list) (session : (string * string) list) =
   Opium.Response.of_json
@@ -26,6 +20,17 @@ let session_return (status : int) (json : (string * string) list) (session : (st
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
   |> Sihl.Web.Session.set (append_expiration session)
   |> Lwt.return
+
+(* same as return but with fixed json payload fiels "error" and "message" *)
+let error status err message = return status [
+  ("error", err);
+  ("message", message)
+]
+
+let session_error status err message session = session_return status [
+  ("error", err);
+  ("message", message)
+] session
 
 (* return a simple request handler that returns ~status and ~json *)
 let simple_handler status json =
