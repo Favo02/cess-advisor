@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom"
 import loginService from "@/services/login"
 import { toast } from "@/components/ui/use-toast"
 
-const ProtectedRoute = ({ children }) => {
+const Authorization = ({ children }) => {
 
   const [auth, setAuth] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -47,4 +47,4 @@ const ProtectedRoute = ({ children }) => {
   )
 }
 
-export default ProtectedRoute
+export default Authorization
