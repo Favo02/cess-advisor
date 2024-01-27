@@ -29,12 +29,13 @@ let login req =
     match user with
     | Some user_id ->
       session_return 200 [
-        ("message",   "login successful");
-        ("id",        user_id);
-        ("username",  json.username);
+        ("message",     "login successful");
+        ("id",          user_id);
+        ("username",    json.username);
       ] [
-        ("id",        user_id);
-        ("username",  json.username);
+        ("id",          user_id);
+        ("username",    json.username);
+        ("expiration",  expiration ());
       ]
     | None -> error 401 "unauthorized" "invalid username or password"
   in try

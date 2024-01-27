@@ -13,7 +13,7 @@ let public_routes = Web.choose
 (* routes accessible only to users not logged in *)
 let no_auth_routes = Web.choose
   ~scope: "/"
-  ~middlewares: [ verify_expiration; require_no_login ]
+  ~middlewares: [ require_no_login ]
   [
     Web.post  "/login"            Handlers.Login.login;
     Web.post  "/users/create"     Handlers.Users.create;

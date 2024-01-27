@@ -1,10 +1,8 @@
-(* return a list appending expiration time (current epoch + 1h) *)
-let append_expiration list =
-  let expiration_epoch =
-    Unix.time () +. 3600.
-    |> int_of_float
-    |> Printf.sprintf "%d"
-  in ("expiration", expiration_epoch) :: list
+(* return expiration epoch (current epoch + 1h) *)
+let expiration () =
+  Unix.time () +. 3600.
+  |> int_of_float
+  |> Printf.sprintf "%d"
 
 (* send an HTTP response with ~status and ~json payload *)
 let return (status : int) (json : (string * string) list) =
@@ -18,7 +16,7 @@ let session_return (status : int) (json : (string * string) list) (session : (st
   Opium.Response.of_json
     ?status: (Some (Opium.Status.of_code status))
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
-  |> Sihl.Web.Session.set (append_expiration session)
+  |> Sihl.Web.Session.set session
   |> Lwt.return
 
 (* same as return but with fixed json payload fiels "error" and "message" *)
@@ -27,6 +25,7 @@ let error status err message = return status [
   ("message", message)
 ]
 
+(* same as error, but also sets ~session *)
 let session_error status err message session = session_return status [
   ("error", err);
   ("message", message)
@@ -35,7 +34,3 @@ let session_error status err message session = session_return status [
 (* return a simple request handler that returns ~status and ~json *)
 let simple_handler status json =
   fun _ -> return status json
-
-(* frequently used responses *)
-let unauthorized () = error 401 "unauthorized" "not logged in"
-let invalid_request () = error 400 "invalid request" "invalid json body"

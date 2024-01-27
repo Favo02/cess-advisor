@@ -35,7 +35,7 @@ let me req =
       ("id", user_id);
       ("username", username)
     ]
-  | _ -> unauthorized ()
+  | _ -> error 401 "unauthorized" "not logged in"
 
 let create req =
   let logic (json : M.user) =
@@ -44,12 +44,13 @@ let create req =
     | false ->
       let%lwt user_id = DB.find Q.create_user (json.username, json.password) in
       session_return 201 [
-        ("message",   "user created");
-        ("id",        user_id);
-        ("username",  json.username);
+        ("message",     "user created");
+        ("id",          user_id);
+        ("username",    json.username);
       ] [
-        ("id",        user_id);
-        ("username",  json.username);
+        ("id",          user_id);
+        ("username",    json.username);
+        ("expiration",  expiration ());
       ]
     | _ -> error 400 "invalid username" "username already taken"
   in try
