@@ -1,5 +1,6 @@
 open Sihl
 open Common.Utils
+open Common.Middlewares
 
 (* routes accessible to everyone *)
 let public_routes = Web.choose
@@ -12,7 +13,7 @@ let public_routes = Web.choose
 (* routes accessible only to users not logged in *)
 let no_auth_routes = Web.choose
   ~scope: "/"
-  ~middlewares: [ Middlewares.verify_expiration; Middlewares.require_no_login ]
+  ~middlewares: [ verify_expiration; require_no_login ]
   [
     Web.post  "/login"            Handlers.Login.login;
     Web.post  "/users/create"     Handlers.Users.create;
@@ -21,7 +22,7 @@ let no_auth_routes = Web.choose
 (* routes accessible only to logged users *)
 let auth_routes = Web.choose
   ~scope: "/"
-  ~middlewares: [ Middlewares.require_login; Middlewares.verify_expiration ]
+  ~middlewares: [ require_login; verify_expiration ]
   [
     Web.get   "/login/verify"     Handlers.Login.verify;
     Web.get   "/users/me"         Handlers.Users.me;
