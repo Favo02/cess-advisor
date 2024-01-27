@@ -1,3 +1,4 @@
 (library
  (name common)
- (libraries sihl))
+ (libraries validate sihl)
+ (preprocess (pps lwt_ppx ppx_yojson_conv)))

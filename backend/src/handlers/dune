@@ -1,4 +1,4 @@
 (library
  (name handlers)
- (libraries common sihl caqti-driver-postgresql)
- (preprocess (pps lwt_ppx ppx_yojson_conv)))
+ (libraries common sihl caqti-driver-postgresql validate)
+ (preprocess (pps lwt_ppx ppx_yojson_conv validate.ppx_derive_validate)))
