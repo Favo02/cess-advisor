@@ -11,6 +11,20 @@ let return (status : int) (json : (string * string) list) =
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
   |> Lwt.return
 
+(* send an HTTP response with ~status and ~json payload *)
+let return_json (status : int) (json : Yojson.Safe.t) =
+  Opium.Response.of_json
+    ?status: (Some (Opium.Status.of_code status))
+    json
+  |> Lwt.return
+
+(* send an HTTP response with ~status and ~json payload *)
+let return_json_list (status : int) (json : Yojson.Safe.t list) =
+  Opium.Response.of_json
+    ?status: (Some (Opium.Status.of_code status))
+    (`List json)
+  |> Lwt.return
+
 (* same as return, but also sets ~session *)
 let session_return (status : int) (json : (string * string) list) (session : (string * string) list) =
   Opium.Response.of_json
