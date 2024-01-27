@@ -8,6 +8,7 @@ let public_routes = Web.choose
   ~middlewares: []
   [
     Web.get   "/version"          (simple_handler 200 [("version", "0.0.1")]);
+    Web.get   "/toilets"          Handlers.Toilets.get_all;
   ]
 
 (* routes accessible only to users not logged in *)
