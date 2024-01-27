@@ -4,22 +4,13 @@ CREATE TABLE users (
   password TEXT NOT NULL
 );
 
--- CREATE TABLE buildings (
---   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
---   name TEXT NOT NULL,
---   address TEXT,
---   description TEXT,
---   creator uuid REFERENCES users(id)
--- );
-
--- CREATE TABLE toilets (
---   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
---   name TEXT,
---   building uuid REFERENCES buildings(id),
---   floor INT,
---   directions TEXT,
---   creator uuid REFERENCES users(id)
--- );
+CREATE TABLE toilets (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  place TEXT NOT NULL,
+  floor INT NOT NULL,
+  creator uuid REFERENCES users(id) NOT NULL
+);
 
 -- CREATE TABLE reviews (
 --   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
