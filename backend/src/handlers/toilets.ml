@@ -7,11 +7,22 @@ module Query = struct
   let get_all =
     unit ->* tup2 (tup4 string string string int) string @@
     "SELECT id, name, place, floor, creator FROM toilets"
+
+  let create =
+    tup4 string string int string ->. unit @@
+    "INSERT INTO toilets (name, place, floor, creator) VALUES (?, ?, ?, ?)"
 end
 
 module Models = struct
   type toilet = {
     id      : string; [@uuid]
+    name    : string; [@regex ""]
+    place   : string; [@regex ""]
+    floor   : int;    [@greater_than -3]
+    creator : string; [@uuid]
+  } [@@deriving yojson, validate]
+
+  type create = {
     name    : string; [@regex ""]
     place   : string; [@regex ""]
     floor   : int;    [@greater_than -3]
@@ -35,4 +46,18 @@ let get_all _ =
     |> return_json_list 200
   in try
     logic ()
+  with _ -> error 400 "invalid request" "generic error, please report this"
+
+let create req =
+  let logic (json : M.create) =
+    match Session.find "id" req = Some json.creator with
+    | false -> error 400 "invalid request" "session id does not match creator id"
+    | true ->
+      let%lwt () = DB.exec Q.create (json.name, json.place, json.floor, json.creator) in
+      return 200 [("message", "toilet created")]
+  in try
+    logic
+    (* |> V.validate_schema M.validate_create *)
+    |> V.validate_model M.create_of_yojson
+    |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"
