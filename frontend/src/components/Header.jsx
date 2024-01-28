@@ -11,7 +11,6 @@ const Header = () => {
 
   useEffect(() => {
     const session = Cookies.get("_session")?.match(/"id":"(.*?)"/)
-    console.log(session)
 
     if (session) {
       setUser(session[1])

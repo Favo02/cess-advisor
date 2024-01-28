@@ -8,18 +8,21 @@ import Authorization from "./components/Authorization"
 
 import LoginPage from "./components/login/LoginPage"
 import ProfilePage from "./components/profile/ProfilePage"
+import HomePage from "./components/home/HomePage"
 
 const router = createBrowserRouter([
   {
     element: <Wrapper><Outlet /></Wrapper>,
     errorElement: <Navigate to="/home" replace />,
     children: [
-      { path: "/home",          element: <p>home</p> },
+      { path: "/home",          element: <HomePage /> },
       { path: "/login",         element: <LoginPage /> },
       {
         element: <Authorization><Outlet /></Authorization>,
         children: [
-          { path: "/profile",   element: <ProfilePage /> }
+          { path: "/profile",             element: <ProfilePage /> },
+          { path: "/toilets/new",         element: <>new toilet</> },
+          { path: "/toilets/:id/review",  element: <>review</> }
         ]
       }
     ]
