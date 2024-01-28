@@ -9,6 +9,7 @@ import Authorization from "./components/Authorization"
 import LoginPage from "./components/login/LoginPage"
 import ProfilePage from "./components/profile/ProfilePage"
 import HomePage from "./components/home/HomePage"
+import NewToiletPage from "./components/toilets/NewToiletPage"
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
         element: <Authorization><Outlet /></Authorization>,
         children: [
           { path: "/profile",             element: <ProfilePage /> },
-          { path: "/toilets/new",         element: <>new toilet</> },
+          { path: "/toilets/new",         element: <NewToiletPage /> },
           { path: "/toilets/:id/review",  element: <>review</> }
         ]
       }
