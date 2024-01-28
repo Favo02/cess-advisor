@@ -29,6 +29,7 @@ let auth_routes = Web.choose
     Web.get   "/users/me"         Handlers.Users.me;
     Web.post  "/logout"           Handlers.Login.logout;
     Web.post  "/toilets/create"   Handlers.Toilets.create;
+    Web.post  "/reviews/create"   Handlers.Reviews.create;
   ]
 
 let router = Web.choose
