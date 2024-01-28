@@ -10,6 +10,7 @@ import LoginPage from "./components/login/LoginPage"
 import ProfilePage from "./components/profile/ProfilePage"
 import HomePage from "./components/home/HomePage"
 import NewToiletPage from "./components/toilets/NewToiletPage"
+import ReviewPage from "./components/toilets/ReviewPage"
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/profile",             element: <ProfilePage /> },
           { path: "/toilets/new",         element: <NewToiletPage /> },
-          { path: "/toilets/:id/review",  element: <>review</> }
+          { path: "/toilets/:id/review",  element: <ReviewPage /> }
         ]
       }
     ]

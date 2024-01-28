@@ -12,7 +12,6 @@ const HomePage = () => {
   useEffect(() => {
     const fetchToilets = async () => {
       const toilets = await toiletsService.getAll()
-      console.log(toilets)
       setToilets(toilets)
     }
 

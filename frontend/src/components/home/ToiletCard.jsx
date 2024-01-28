@@ -23,13 +23,13 @@ const ToiletCard = ({ toilet }) => {
     <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>{toilet.name || <i>No name</i>}</CardTitle>
-        <CardDescription>{toilet.place || <i>No place</i>} - {toilet.floor} floor</CardDescription>
+        <CardDescription>{toilet.place || <i>No place</i>}, {toilet.floor} floor</CardDescription>
       </CardHeader>
       <CardContent>
         {toilet.rating
           ? <>
-            <StyledRating name="half-rating-read" defaultValue={toilet.rating} precision={0.5} readOnly />
-            <p className="text-center">{toilet.reviews_count} reviews: <b>{toilet.rating}</b> average</p>
+            <StyledRating name="half-rating-read" defaultValue={toilet.rating/2} precision={0.5} readOnly />
+            <p className="text-center">{toilet.reviews_count} reviews: <b>{toilet.rating/2}</b> average</p>
           </>
           : <>
             <StyledRating name="half-rating-read" defaultValue={0} precision={0.5} readOnly disabled />
@@ -39,7 +39,9 @@ const ToiletCard = ({ toilet }) => {
       </CardContent>
       <CardFooter className="flex justify-between">
         <CardDescription className="text-xs"><i>Added by {toilet.creator_name}</i></CardDescription>
-        <Button onClick={() => navigate(`/toilets/${toilet.id}/review`)}>Review</Button>
+        <Button onClick={
+          () => navigate(`/toilets/${toilet.id}/review`, { state: { toilet: toilet } })
+        }>Review</Button>
       </CardFooter>
     </Card>
   )
