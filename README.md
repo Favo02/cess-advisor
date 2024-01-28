@@ -1,6 +1,6 @@
-## Cess Advisor
-
 <img src="frontend/src/assets/logo.png" width="100" align="right" alt="Logo" />
+
+## Cess Advisor
 
 Cess Advisor is a **stupid** yet really **useful** web app that helps you decide whether a _decent toilet_ is available or you _should suffer_.
 
