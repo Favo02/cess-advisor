@@ -4,6 +4,15 @@ let expiration () =
   |> int_of_float
   |> Printf.sprintf "%d"
 
+(* return current date in format "YYYY-MM-DD" *)
+let current_date () =
+  let time = Unix.time () in
+  let tm = Unix.localtime time in
+  Printf.sprintf "%04d-%02d-%02d"
+    (1900 + tm.Unix.tm_year)
+    (1 + tm.Unix.tm_mon)
+    tm.Unix.tm_mday
+
 (* send an HTTP response with ~status and ~json payload *)
 let return (status : int) (json : (string * string) list) =
   Opium.Response.of_json
