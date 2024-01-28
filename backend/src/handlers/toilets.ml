@@ -26,7 +26,6 @@ module Models = struct
     name    : string; [@regex ""]
     place   : string; [@regex ""]
     floor   : int;    [@greater_than -3]
-    creator : string; [@uuid]
   } [@@deriving yojson, validate]
 end
 
@@ -50,10 +49,10 @@ let get_all _ =
 
 let create req =
   let logic (json : M.create) =
-    match Session.find "id" req = Some json.creator with
-    | false -> error 400 "invalid request" "session id does not match creator id"
-    | true ->
-      let%lwt () = DB.exec Q.create (json.name, json.place, json.floor, json.creator) in
+    match Session.find "id" req with
+    | None -> error 400 "invalid request" "no session id found"
+    | Some creator ->
+      let%lwt () = DB.exec Q.create (json.name, json.place, json.floor, creator) in
       return 200 [("message", "toilet created")]
   in try
     logic
