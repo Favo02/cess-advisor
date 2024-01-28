@@ -24,6 +24,13 @@ const RegisterForm = () => {
 
   const onSubmit = async (data) => {
 
+    if (data.password !== data.confirmPassword) {
+      toast({
+        title: "Passwords do not match"
+      })
+      return
+    }
+
     try {
       await usersService.create(data.username, data.password)
       toast({
