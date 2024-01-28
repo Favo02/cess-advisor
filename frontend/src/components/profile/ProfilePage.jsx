@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 import usersService from "@/services/users"
 import loginService from "@/services/login"
-import { useEffect } from "react"
 import { toast } from "@/components/ui/use-toast"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 
 const ProfilePage = () => {

@@ -1,8 +1,9 @@
-import toiletsService from "@/services/toilets"
 import { useEffect, useState } from "react"
-import ToiletCard from "@/components/home/ToiletCard"
-import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
+
+import toiletsService from "@/services/toilets"
+import ToiletCard from "@/components/home/ToiletCard"
+import { Button } from "@/components/ui/button"
 
 const HomePage = () => {
 

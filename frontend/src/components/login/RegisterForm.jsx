@@ -1,14 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+
+import usersService from "@/services/users"
+import { CreateUserSchema } from "@/validations/user"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
-import { CreateUserSchema } from "@/validations/user"
-import usersService from "@/services/users"
-import { useNavigate } from "react-router-dom"
-
-// TODO: refactor using the same component for both login and register
 
 const RegisterForm = () => {
 

@@ -1,12 +1,11 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import LoginForm from "./LoginForm"
-import RegisterForm from "./RegisterForm"
 import { useEffect } from "react"
-import loginService from "@/services/login"
 import { useNavigate } from "react-router-dom"
 
-// TODO: refactor using the same component for both login and register
+import loginService from "@/services/login"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import LoginForm from "@/components/login/LoginForm"
+import RegisterForm from "@/components/login/RegisterForm"
 
 const LoginPage = () => {
 
@@ -26,7 +25,6 @@ const LoginPage = () => {
 
     authenticate()
   }, [navigate])
-
 
   return (
     <div className="flex flex-col items-center justify-center w-full">

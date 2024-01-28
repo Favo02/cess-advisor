@@ -1,15 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card"
-import Rating from "@mui/material/Rating"
-import { Button } from "../ui/button"
-import { styled } from "@mui/material/styles"
 import { useNavigate } from "react-router-dom"
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import Rating from "@mui/material/Rating"
+import { styled } from "@mui/material/styles"
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": { color: "#34dfa1" },
