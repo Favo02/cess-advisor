@@ -29,8 +29,8 @@ const LoginPage = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="w-1/3 min-w-[400px] mx-auto min-h-[100vh] flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full">
+      <div className="w-1/3 min-w-[400px] mx-auto mt-20 flex flex-col items-center justify-center">
 
         <Tabs defaultValue="login" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
