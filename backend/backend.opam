@@ -9,9 +9,15 @@ homepage: "https://github.com/Favo02/cess-advisor"
 doc: "https://github.com/Favo02/cess-advisor"
 bug-reports: "https://github.com/Favo02/cess-advisor/issues"
 depends: [
-  "ocaml"
+  "ocaml" {>= "5.0.0"}
   "dune" {>= "3.10"}
   "sihl"
+  "caqti-driver-postgresql"
+  "validate"
+  "yojson"
+  "conf-libev"
+  "lwt"
+  "ppx_yojson_conv"
   "odoc" {with-doc}
 ]
 build: [

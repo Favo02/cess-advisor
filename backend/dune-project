@@ -19,4 +19,4 @@
  (name backend)
  (synopsis "REST API for Cess Advisor")
  (description "REST API for Cess Advisor, a toilet review system")
- (depends ocaml dune sihl))
+ (depends (ocaml (>= 5.0.0)) dune sihl caqti-driver-postgresql validate yojson conf-libev lwt ppx_yojson_conv))
