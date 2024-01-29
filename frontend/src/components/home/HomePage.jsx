@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import toiletsService from "@/services/toilets"
 import ToiletCard from "@/components/home/ToiletCard"
 import { Button } from "@/components/ui/button"
+import { toast } from "@/components/ui/use-toast"
 
 const HomePage = () => {
 
@@ -12,8 +13,15 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchToilets = async () => {
-      const toilets = await toiletsService.getAll()
-      setToilets(toilets)
+      try {
+        const fetchedToilets = await toiletsService.getAll()
+        setToilets(fetchedToilets)
+      } catch (e) {
+        toast({
+          title: "Creation failed",
+          description: e?.response?.data?.message || "Something went wrong"
+        })
+      }
     }
 
     fetchToilets()
