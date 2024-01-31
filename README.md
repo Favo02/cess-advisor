@@ -1,4 +1,4 @@
-<img src="frontend/src/assets/logo.png" width="100" align="right" alt="Logo" />
+<img src="https://github.com/Favo02/cess-advisor/assets/59796435/f71a96e5-5769-46e4-a547-93cff46b1b7b" width="100" align="right" alt="Logo" />
 
 ## Cess Advisor
 
