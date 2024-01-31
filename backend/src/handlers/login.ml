@@ -10,9 +10,9 @@ module Query = struct
 end
 
 module Models = struct
-  type user = {
-    username : string; [@regex "/^[a-zA-Z0-9_]{4,16}$/"]
-    password : string; [@regex "/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,20}$/"]
+  type login = {
+    username : string; [@regex ""]
+    password : string; [@regex ""]
   } [@@deriving yojson, validate]
 end
 
@@ -24,7 +24,7 @@ module Q = Query
 module M = Models
 
 let login req =
-  let logic (json : M.user) =
+  let logic (json : M.login) =
     let%lwt user = DB.find_opt Q.find_user (json.username, json.password) in
     match user with
     | Some user_id ->
@@ -40,8 +40,8 @@ let login req =
     | None -> error 401 "unauthorized" "invalid username or password"
   in try
     logic
-    (* |> V.validate_schema M.validate_user *)
-    |> V.validate_model M.user_of_yojson
+    (* |> V.validate_schema M.validate_login *)
+    |> V.validate_model M.login_of_yojson
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"
 

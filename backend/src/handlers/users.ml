@@ -14,9 +14,9 @@ module Query = struct
 end
 
 module Models = struct
-  type user = {
-    username : string; [@regex "/^[a-zA-Z0-9_]{4,16}$/"]
-    password : string; [@regex "/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,20}$/"]
+  type create = {
+    username : string; [@regex ""]
+    password : string; [@regex ""]
   } [@@deriving yojson, validate]
 end
 
@@ -38,7 +38,7 @@ let me req =
   | _ -> error 401 "unauthorized" "not logged in"
 
 let create req =
-  let logic (json : M.user) =
+  let logic (json : M.create) =
     let%lwt username_valid = DB.find Q.check_username_free json.username in
     match username_valid with
     | false ->
@@ -55,7 +55,7 @@ let create req =
     | _ -> error 400 "invalid username" "username already taken"
   in try
     logic
-    (* |> V.validate_schema M.validate_user *)
-    |> V.validate_model M.user_of_yojson
+    (* |> V.validate_schema M.validate_create *)
+    |> V.validate_model M.create_of_yojson
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"

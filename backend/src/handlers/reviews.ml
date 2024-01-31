@@ -21,7 +21,7 @@ module Models = struct
 
   type create = {
     toilet           : string;  [@uuid]
-    rating           : int;     [@range min=0 max=10]
+    rating           : int;     [@greater_than 0]
     description      : string;  [@regex ""]
   } [@@deriving yojson, validate]
 end
