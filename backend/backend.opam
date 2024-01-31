@@ -13,11 +13,9 @@ depends: [
   "dune" {>= "3.10"}
   "sihl"
   "caqti-driver-postgresql"
-  "validate"
-  "yojson"
-  "conf-libev"
-  "lwt"
+  "lwt_ppx"
   "ppx_yojson_conv"
+  "validate"
   "odoc" {with-doc}
 ]
 build: [
