@@ -16,11 +16,11 @@ Cess Advisor is a **stupid** yet really **useful** web app that helps you decide
   - [Yojson](https://github.com/ocaml-community/yojson): OCaml library for JSON serialization
   - [Validate](https://github.com/Axot017/validate): OCaml library for validating schemas
 
-- Frontend: **JavaScript** _(much much much much worse than OCaml)_
-  - [React](https://reactjs.org/): JavaScript framework for frontend web development
-  - [Vite](https://vitejs.dev/): React build tool
-  - [Tailwind CSS](https://tailwindcss.com/): CSS framework
-  - [Shadcn-ui](https://ui.shadcn.com/): React components library
+- ~~Frontend: **JavaScript** _(much much much much worse than OCaml)_~~
+  - ~~[React](https://reactjs.org/): JavaScript framework for frontend web development~~
+  - ~~[Vite](https://vitejs.dev/): React build tool~~
+  - ~~[Tailwind CSS](https://tailwindcss.com/): CSS framework~~
+  - ~~[Shadcn-ui](https://ui.shadcn.com/): React components library~~
 
 - Database:
   - [PostgreSQL](https://www.postgresql.org/): relational database
@@ -48,11 +48,11 @@ This project follows the following **commit convention**: `<type>(<part>/<scope>
     - `handlers`: request handlers
     - `middlewares`: middleware functions
     - `utils`: utility module
-  - `fe/`: frontend
-    - `components`: components
-    - `pages`: pages _(routing)_
-    - `services`: interaction with backend API
-    - `validators`: form validators
+  - ~~`fe/`: frontend~~
+    - ~~`components`: components~~
+    - ~~`pages`: pages _(routing)_~~
+    - ~~`services`: interaction with backend API~~
+    - ~~`validators`: form validators~~
   - `db/`: database
     - `tables`: tables
   - `repo`: repository _(omit scope)_
