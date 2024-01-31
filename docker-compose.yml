@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  backend:
+    container_name: cess-advisor-backend
+    restart: unless-stopped
+    build:
+      context: .
+    ports:
+      - 3057:3000
