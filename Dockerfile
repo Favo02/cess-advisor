@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY backend .
 COPY .env .
-RUN mkdir logs
+RUN sudo chown -R opam:nogroup .
 
 RUN sudo apk add gmp-dev libev-dev postgresql14-dev
 
@@ -15,7 +15,6 @@ ENV ROOT_PATH=/app
 RUN opam update && opam upgrade -y
 RUN opam install dune
 RUN opam install . --deps-only
-RUN sudo chown -R opam:nogroup .
 RUN opam exec -- dune build
 
 EXPOSE 3000
