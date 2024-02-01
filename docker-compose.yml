@@ -7,5 +7,7 @@ services:
     restart: unless-stopped
     build:
       context: .
+    volumes:
+      - './logs:/app/logs'
     ports:
       - 3057:3000
