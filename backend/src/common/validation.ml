@@ -26,3 +26,16 @@ let validate_schema schema next json =
   | Validate.IterableError _ -> error 400 "invalid request" "iter"
   | Validate.RecordError ((a, _) :: _) -> error 400 "invalid request" a
   | _ -> error 400 "invalid request" "" *)
+
+(* check if a string matches multiple regexes, returning a boolean *)
+let multi_regex_check (regexes : string list) (str : string) =
+  let compile regex = Re.execp (Re.Perl.re regex |> Re.compile) str in
+  List.fold_left (fun acc regex -> acc && (compile regex)) true regexes
+
+(* simulate password regex (lookahead is not supported by ocaml)
+  the password will be validated also in the database
+  ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$ *)
+let custom_password psw =
+  match multi_regex_check ["[A-Za-z]"; "[0-9]"; "[@$!%*#?&]"; "^.{8,20}$"] psw with
+  | true -> Ok ()
+  | false -> Error (Validate.BaseError { code = "invalid password"; params = [] })
