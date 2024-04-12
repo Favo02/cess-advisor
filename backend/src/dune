@@ -1,4 +1,4 @@
 (executable
  (name main)
  (public_name main)
- (libraries common handlers sihl caqti-driver-postgresql))
+ (libraries common handlers sihl caqti-driver-postgresql safepass))
