@@ -39,10 +39,11 @@ let me req =
 
 let create req =
   let logic (json : M.create) =
-    let%lwt username_valid = DB.find Q.check_username_free json.username in
-    match username_valid with
+    let%lwt username_taken = DB.find Q.check_username_free json.username in
+    match username_taken with
     | false ->
-      let%lwt user_id = DB.find Q.create_user (json.username, json.password) in
+      let password_hash = Bcrypt.string_of_hash (Bcrypt.hash json.password) in
+      let%lwt user_id = DB.find Q.create_user (json.username, password_hash) in
       session_return 201 [
         ("message",     "user created");
         ("id",          user_id);

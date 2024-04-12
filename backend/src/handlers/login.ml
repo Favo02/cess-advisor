@@ -5,8 +5,8 @@ module Query = struct
   open Caqti_type.Std
 
   let find_user =
-    tup2 string string ->? string @@
-    "SELECT id FROM users WHERE username = ? AND password = ?"
+    string ->? tup2 string string @@
+    "SELECT id, password FROM users WHERE username = ?"
 end
 
 module Models = struct
@@ -25,19 +25,21 @@ module M = Models
 
 let login req =
   let logic (json : M.login) =
-    let%lwt user = DB.find_opt Q.find_user (json.username, json.password) in
+    let%lwt user = DB.find_opt Q.find_user json.username in
     match user with
-    | Some user_id ->
-      session_return 200 [
-        ("message",     "login successful");
-        ("id",          user_id);
-        ("username",    json.username);
-      ] [
-        ("id",          user_id);
-        ("username",    json.username);
-        ("expiration",  expiration ());
-      ]
     | None -> error 401 "unauthorized" "invalid username or password"
+    | Some (user_id, password) ->
+      match Bcrypt.verify json.password (Bcrypt.hash_of_string password) with
+      | false -> error 401 "unauthorized" "invalid username or password"
+      | true -> session_return 200 [
+          ("message",     "login successful");
+          ("id",          user_id);
+          ("username",    json.username);
+        ] [
+          ("id",          user_id);
+          ("username",    json.username);
+          ("expiration",  expiration ());
+        ]
   in try
     logic
     |> V.validate_schema M.validate_login
