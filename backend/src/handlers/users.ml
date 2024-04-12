@@ -15,8 +15,8 @@ end
 
 module Models = struct
   type create = {
-    username : string; [@regex ""]
-    password : string; [@regex ""]
+    username : string; [@regex "^[a-zA-Z0-9]{4,16}$"]
+    password : string; [@custom Common.Validation.custom_password]
   } [@@deriving yojson, validate]
 end
 
@@ -55,7 +55,7 @@ let create req =
     | _ -> error 400 "invalid username" "username already taken"
   in try
     logic
-    (* |> V.validate_schema M.validate_create *)
+    |> V.validate_schema M.validate_create
     |> V.validate_model M.create_of_yojson
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"

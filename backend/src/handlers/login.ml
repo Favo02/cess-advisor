@@ -11,8 +11,8 @@ end
 
 module Models = struct
   type login = {
-    username : string; [@regex ""]
-    password : string; [@regex ""]
+    username : string; [@regex "^[a-zA-Z0-9]{4,16}$"]
+    password : string; [@custom Common.Validation.custom_password]
   } [@@deriving yojson, validate]
 end
 
@@ -40,7 +40,7 @@ let login req =
     | None -> error 401 "unauthorized" "invalid username or password"
   in try
     logic
-    (* |> V.validate_schema M.validate_login *)
+    |> V.validate_schema M.validate_login
     |> V.validate_model M.login_of_yojson
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"

@@ -19,13 +19,7 @@ let validate_model model next json =
 let validate_schema schema next json =
   match schema json with
   | Ok _ -> next json
-  (* TODO: return decent error message *)
   | Error _ -> error 400 "invalid request" "invalid schema"
-  (* match e with
-  | Validate.BaseError e -> error 400 "invalid request" e.code
-  | Validate.IterableError _ -> error 400 "invalid request" "iter"
-  | Validate.RecordError ((a, _) :: _) -> error 400 "invalid request" a
-  | _ -> error 400 "invalid request" "" *)
 
 (* check if a string matches multiple regexes, returning a boolean *)
 let multi_regex_check (regexes : string list) (str : string) =
