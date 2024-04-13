@@ -18,8 +18,14 @@ module Query = struct
     INNER JOIN users u ON r.author = u.id"
 
   let create =
-    tup3 (tup4 string string int string) (tup4 bool bool bool bool) (tup2 int int) ->. unit @@
-    "INSERT INTO reviews (author, toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    tup3
+      (tup4 string string int string)
+      (tup4 bool bool bool bool)
+      (tup2 int int)
+    ->. unit @@
+    "INSERT INTO reviews
+      (author, toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 end
 
 module Models = struct
@@ -86,7 +92,11 @@ let create req =
     match Session.find "id" req with
     | None -> error 400 "invalid request" "no session id found"
     | Some author ->
-      let%lwt () = DB.exec Q.create ((author, json.toilet, json.rating, json.description), (json.paper, json.soap, json.dryer, json.hotwater), (json.clean, json.temperature)) in
+      let%lwt () = DB.exec Q.create (
+        (author, json.toilet, json.rating, json.description),
+        (json.paper, json.soap, json.dryer, json.hotwater),
+        (json.clean, json.temperature)
+      ) in
       return 200 [("message", "review created")]
   in try%lwt
     logic

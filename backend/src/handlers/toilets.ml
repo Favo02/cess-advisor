@@ -5,19 +5,27 @@ module Query = struct
   open Caqti_type.Std
 
   let get_all =
-    unit ->* tup3 (tup4 string string string string) (tup4 string string string string) (tup2 (option float) int) @@
+    unit ->* tup3
+      (tup4 string string string string)
+      (tup4 string string string string)
+      (tup2 (option float) int) @@
     "SELECT
-      t.id, u.username AS creator_name, t.creator AS creator_id, creation AS creation_date,
+      t.id, u.username AS creator_name, t.creator AS creator_id, t.creation AS creation_date,
       t.title, t.building, t.place, t.description,
-      AVG(rating) AS rating, COUNT(rating) as reviews_count
+      AVG(r.rating) AS rating, COUNT(r.rating) as reviews_count
     FROM toilets t
     INNER JOIN users u ON t.creator = u.id
     LEFT JOIN reviews r ON t.id = r.toilet
     GROUP BY t.id, u.username"
 
   let create =
-    tup2 (tup3 string string string) (tup2 string string) ->. unit @@
-    "INSERT INTO toilets (creator, title, building, place, description) VALUES (?, ?, ?, ?, ?)"
+    tup2
+      (tup3 string string string)
+      (tup2 string string)
+    ->. unit @@
+    "INSERT INTO toilets
+      (creator, title, building, place, description)
+    VALUES (?, ?, ?, ?, ?)"
 end
 
 module Models = struct
@@ -52,9 +60,15 @@ module M = Models
 let get_all _ =
   let logic () =
     let%lwt toilets = DB.collect Q.get_all () in
-    List.map (fun ((id, creator_name, creator_id, creation_date), (title, building, place, description), (rating, reviews_count)) ->
-      M.yojson_of_get M.({ id; creator_name; creator_id; creation_date; title; building; place; description; rating; reviews_count; })
-    ) toilets
+    List.map (fun (
+      (id, creator_name, creator_id, creation_date),
+      (title, building, place, description),
+      (rating, reviews_count)
+    ) -> M.yojson_of_get M.({
+      id; creator_name; creator_id; creation_date;
+      title; building; place; description;
+      rating; reviews_count;
+    })) toilets
     |> return_json_list 200
   in try%lwt
     logic ()
@@ -65,7 +79,10 @@ let create req =
     match Session.find "id" req with
     | None -> error 400 "invalid request" "no session id found"
     | Some creator ->
-      let%lwt () = DB.exec Q.create ((creator, json.title, json.building), (json.place, json.description)) in
+      let%lwt () = DB.exec Q.create (
+        (creator, json.title, json.building),
+        (json.place, json.description)
+      ) in
       return 200 [("message", "toilet created")]
   in try%lwt
     logic
