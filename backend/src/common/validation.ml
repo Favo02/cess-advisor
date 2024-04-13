@@ -34,3 +34,9 @@ let custom_password psw =
   match multi_regex_check ["[A-Za-z]"; "[0-9]"; "[@$!%*#?&]"; "^.{8,20}$"] psw with
   | true -> Ok ()
   | false -> Error (Validate.BaseError { code = "invalid password"; params = [] })
+
+(* check that ~uuid is a valid uuid *)
+let validate_uuid_param uuid next =
+  match multi_regex_check ["^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"] uuid with
+  | true -> next uuid
+  | false -> error 400 "invalid request" "invalid params"
