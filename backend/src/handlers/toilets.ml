@@ -4,6 +4,21 @@ module Query = struct
   open Caqti_request.Infix
   open Caqti_type.Std
 
+  let get =
+    string ->* tup3
+      (tup4 string string string string)
+      (tup4 string string string string)
+      (tup2 (option float) int) @@
+    "SELECT
+      t.id, u.username AS creator_name, t.creator AS creator_id, t.creation AS creation_date,
+      t.title, t.building, t.place, t.description,
+      AVG(r.rating) AS rating, COUNT(r.rating) as reviews_count
+    FROM toilets t
+    INNER JOIN users u ON t.creator = u.id
+    LEFT JOIN reviews r ON t.id = r.toilet
+    WHERE t.id = ?
+    GROUP BY t.id, u.username"
+
   let get_all =
     unit ->* tup3
       (tup4 string string string string)
@@ -56,6 +71,24 @@ module DB = Sihl.Database
 module V = Common.Validation
 module Q = Query
 module M = Models
+
+let get req =
+  let logic toilet_id =
+    let%lwt toilets = DB.collect Q.get toilet_id in
+    List.map (fun (
+      (id, creator_name, creator_id, creation_date),
+      (title, building, place, description),
+      (rating, reviews_count)
+    ) -> M.yojson_of_get M.({
+      id; creator_name; creator_id; creation_date;
+      title; building; place; description;
+      rating; reviews_count;
+    })) toilets
+    |> return_json_list 200
+  in try%lwt
+    logic
+    |> V.validate_uuid_param (Opium.Router.param req "toilet")
+  with _ -> error 400 "invalid request" "generic error, please report this"
 
 let get_all _ =
   let logic () =
