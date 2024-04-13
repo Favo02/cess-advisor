@@ -3,50 +3,39 @@ open Common.Utils
 open Common.Middlewares
 
 (* routes accessible to everyone *)
-let public_routes = Web.choose
-  ~scope: "/"
-  ~middlewares: []
-  [
-    Web.get   "/version"          (simple_handler 200 [("version", "0.0.2")]);
-    Web.get   "/toilets"          Handlers.Toilets.get_all;
-    Web.get   "/toilets/:toilet"  Handlers.Toilets.get;
-    Web.get   "/reviews"          Handlers.Reviews.get_all;
-    Web.get   "/reviews/:toilet"  Handlers.Reviews.get_by_toilet;
-  ]
+let public = Web.choose ~scope: "/api" ~middlewares: [] [
+  Web.get   "/version"          (simple_handler 200 [("version", "0.0.2")]);
+  Web.get   "/toilets"          Handlers.Toilets.get_all;
+  Web.get   "/toilets/:toilet"  Handlers.Toilets.get;
+  Web.get   "/reviews"          Handlers.Reviews.get_all;
+  Web.get   "/reviews/:toilet"  Handlers.Reviews.get_by_toilet;
+]
 
 (* routes accessible only to users not logged in *)
-let no_auth_routes = Web.choose
-  ~scope: "/"
-  ~middlewares: [ require_no_login ]
-  [
-    Web.post  "/login"            Handlers.Login.login;
-    Web.post  "/users/create"     Handlers.Users.create;
-  ]
+let no_auth = Web.choose ~scope: "/api" ~middlewares: [ require_no_login ] [
+  Web.post  "/login"            Handlers.Login.login;
+  Web.post  "/users/create"     Handlers.Users.create;
+]
 
 (* routes accessible only to logged users *)
-let auth_routes = Web.choose
-  ~scope: "/"
-  ~middlewares: [ require_login; verify_expiration ]
-  [
-    Web.get   "/login/verify"     Handlers.Login.verify;
-    Web.get   "/users/me"         Handlers.Users.me;
-    Web.post  "/logout"           Handlers.Login.logout;
-    Web.post  "/toilets/create"   Handlers.Toilets.create;
-    Web.post  "/reviews/create"   Handlers.Reviews.create;
-  ]
+let auth = Web.choose ~scope: "/api" ~middlewares: [ require_login; verify_expiration ] [
+  Web.get   "/login/verify"     Handlers.Login.verify;
+  Web.get   "/users/me"         Handlers.Users.me;
+  Web.post  "/logout"           Handlers.Login.logout;
+  Web.post  "/toilets/create"   Handlers.Toilets.create;
+  Web.post  "/reviews/create"   Handlers.Reviews.create;
+]
 
-let router = Web.choose
-  ~scope: "/api/"
-  ~middlewares: [ Web.Middleware.error () ]
-  [
-    public_routes;
-    no_auth_routes;
-    auth_routes;
-  ]
+let router = Web.choose ~middlewares: [ Web.Middleware.error () ] [
+  public;
+  no_auth;
+  auth;
+  Web.any "**" (simple_handler 404 [("error 404", "Not found")]);
+]
 
 let services = [
   Database.register ();
   Web.Http.register router;
 ]
 
-let () = App.(empty |> with_services services |> run)
+let () = App.empty |> App.with_services services |> App.run
