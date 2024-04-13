@@ -23,8 +23,9 @@ let validate_schema schema next json =
 
 (* check if a string matches multiple regexes, returning a boolean *)
 let multi_regex_check (regexes : string list) (str : string) =
-  let compile regex = Re.execp (Re.Perl.re regex |> Re.compile) str in
-  List.fold_left (fun acc regex -> acc && (compile regex)) true regexes
+  let compile string_regex = Re.Perl.re string_regex |> Re.compile in
+  let verify compiled_regex = Re.execp compiled_regex str in
+  List.fold_left (fun acc regex -> acc && (compile regex |> verify)) true regexes
 
 (* simulate password regex (lookahead is not supported by ocaml)
   the password will be validated also in the database
