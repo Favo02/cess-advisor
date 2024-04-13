@@ -41,7 +41,7 @@ let create req =
     | Some author ->
       let%lwt () = DB.exec Q.create ((author, date, json.toilet, json.rating), json.description) in
       return 200 [("message", "review created")]
-  in try
+  in try%lwt
     logic
     (* |> V.validate_schema M.validate_create *)
     |> V.validate_model M.create_of_yojson

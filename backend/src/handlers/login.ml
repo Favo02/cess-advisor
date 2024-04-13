@@ -40,7 +40,7 @@ let login req =
           ("username",    json.username);
           ("expiration",  expiration ());
         ]
-  in try
+  in try%lwt
     logic
     |> V.validate_schema M.validate_login
     |> V.validate_model M.login_of_yojson

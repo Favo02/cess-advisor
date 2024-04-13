@@ -54,7 +54,7 @@ let create req =
         ("expiration",  expiration ());
       ]
     | _ -> error 400 "invalid username" "username already taken"
-  in try
+  in try%lwt
     logic
     |> V.validate_schema M.validate_create
     |> V.validate_model M.create_of_yojson
