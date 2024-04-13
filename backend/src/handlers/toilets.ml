@@ -5,37 +5,40 @@ module Query = struct
   open Caqti_type.Std
 
   let get_all =
-    unit ->* tup2 (tup4 string string string int) (tup4 string string (option float) int) @@
+    unit ->* tup3 (tup4 string string string string) (tup4 string string string string) (tup2 (option float) int) @@
     "SELECT
-        t.id, name, place, floor,
-        creator AS creator_id, username AS creator_name,
-        AVG(rating) AS rating, COUNT(rating) as reviews_count
+      t.id, u.username AS creator_name, t.creator AS creator_id, creation AS creation_date,
+      t.title, t.building, t.place, t.description,
+      AVG(rating) AS rating, COUNT(rating) as reviews_count
     FROM toilets t
     INNER JOIN users u ON t.creator = u.id
     LEFT JOIN reviews r ON t.id = r.toilet
     GROUP BY t.id, u.username"
 
   let create =
-    tup4 string string int string ->. unit @@
-    "INSERT INTO toilets (name, place, floor, creator) VALUES (?, ?, ?, ?)"
+    tup2 (tup3 string string string) (tup2 string string) ->. unit @@
+    "INSERT INTO toilets (creator, title, building, place, description) VALUES (?, ?, ?, ?, ?)"
 end
 
 module Models = struct
   type get = {
     id            : string;
-    name          : string;
-    place         : string;
-    floor         : int;
-    creator_id    : string;
     creator_name  : string;
+    creator_id    : string;
+    creation_date : string;
+    title         : string;
+    building      : string;
+    place         : string;
+    description   : string;
     rating        : float option;
     reviews_count : int;
-  } [@@deriving yojson]
+  } [@@deriving yojson] (* no need to validate, read from db *)
 
   type create = {
-    name    : string; [@regex ""]
-    place   : string; [@regex ""]
-    floor   : int;    [@greater_than -3]
+    title       : string; [@regex "^[\t\n\x20-\xFF]{6,50}$"]
+    building    : string; [@regex "^[\t\n\x20-\xFF]{6,50}$"]
+    place       : string; [@regex "^[\t\n\x20-\xFF]{6,50}$"]
+    description : string; [@regex "^[\t\n\x20-\xFF]{6,250}$"]
   } [@@deriving yojson, validate]
 end
 
@@ -49,11 +52,11 @@ module M = Models
 let get_all _ =
   let logic () =
     let%lwt toilets = DB.collect Q.get_all () in
-    List.map (fun ((id, name, place, floor), (creator_id, creator_name, rating, reviews_count)) ->
-      M.yojson_of_get M.({ id; name; place; floor; creator_id; creator_name; rating; reviews_count; })
+    List.map (fun ((id, creator_name, creator_id, creation_date), (title, building, place, description), (rating, reviews_count)) ->
+      M.yojson_of_get M.({ id; creator_name; creator_id; creation_date; title; building; place; description; rating; reviews_count; })
     ) toilets
     |> return_json_list 200
-  in try
+  in try%lwt
     logic ()
   with _ -> error 400 "invalid request" "generic error, please report this"
 
@@ -62,11 +65,11 @@ let create req =
     match Session.find "id" req with
     | None -> error 400 "invalid request" "no session id found"
     | Some creator ->
-      let%lwt () = DB.exec Q.create (json.name, json.place, json.floor, creator) in
+      let%lwt () = DB.exec Q.create ((creator, json.title, json.building), (json.place, json.description)) in
       return 200 [("message", "toilet created")]
-  in try
+  in try%lwt
     logic
-    (* |> V.validate_schema M.validate_create *)
+    |> V.validate_schema M.validate_create
     |> V.validate_model M.create_of_yojson
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"
