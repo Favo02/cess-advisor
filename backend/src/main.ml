@@ -10,6 +10,7 @@ let public_routes = Web.choose
     Web.get   "/version"          (simple_handler 200 [("version", "0.0.2")]);
     Web.get   "/toilets"          Handlers.Toilets.get_all;
     Web.get   "/reviews"          Handlers.Reviews.get_all;
+    Web.get   "/reviews/:toilet"  Handlers.Reviews.get_by_toilet;
   ]
 
 (* routes accessible only to users not logged in *)
