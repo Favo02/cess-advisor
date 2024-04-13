@@ -4,19 +4,42 @@ module Query = struct
   open Caqti_request.Infix
   open Caqti_type.Std
 
+  let get_all =
+    unit ->* tup3
+      (tup2 (tup3 string string string) (tup2 string string))
+      (tup3 string string string)
+      (tup2 (tup4 int string bool bool) (tup4 bool bool int int)) @@
+    "SELECT
+      r.id, t.id AS toilet_id, t.title, t.place, t.building,
+      r.author AS author_id, u.username AS author_name, r.date,
+      r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
+    FROM reviews r
+    INNER JOIN toilets t ON r.toilet = t.id
+    INNER JOIN users u ON r.author = u.id"
+
   let create =
     tup3 (tup4 string string int string) (tup4 bool bool bool bool) (tup2 int int) ->. unit @@
     "INSERT INTO reviews (author, toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 end
 
 module Models = struct
-  type get = { (* FIXME *)
+  type get = {
     id            : string;
-    author        : string;
+    toilet_id     : string;
+    title         : string;
+    place         : string;
+    building      : string;
+    author_id     : string;
+    author_name   : string;
     date          : string;
-    toilet        : string;
     rating        : int;
     description   : string;
+    paper         : bool;
+    soap          : bool;
+    dryer         : bool;
+    hotwater      : bool;
+    clean         : int;
+    temperature   : int;
   } [@@deriving yojson] (* no need to validate, read from db *)
 
   type create = {
@@ -39,7 +62,22 @@ module V = Common.Validation
 module Q = Query
 module M = Models
 
-(* TODO: add get last reviews *)
+let get_all _ =
+  let logic () =
+    let%lwt toilets = DB.collect Q.get_all () in
+    List.map (fun (
+      ((id, toilet_id, title), (place, building)),
+      (author_id, author_name, date),
+      ((rating, description, paper, soap), (dryer, hotwater, clean, temperature))
+    ) -> M.yojson_of_get M.({
+      id; toilet_id; title; place; building;
+      author_id; author_name; date;
+      rating; description; paper; soap; dryer; hotwater; clean; temperature
+    })) toilets
+    |> return_json_list 200
+  in try%lwt
+    logic ()
+  with _ -> error 400 "invalid request" "generic error, please report this"
 
 (* TODO: add get toilet reviews *)
 
