@@ -5,7 +5,7 @@ module Query = struct
   open Caqti_type.Std
 
   let get =
-    string ->* tup3
+    string ->! tup3
       (tup4 string string string string)
       (tup4 string string string string)
       (tup2 (option float) int) @@
@@ -74,17 +74,17 @@ module M = Models
 
 let get req =
   let logic toilet_id =
-    let%lwt toilets = DB.collect Q.get toilet_id in
-    List.map (fun (
+    let%lwt
       (id, creator_name, creator_id, creation_date),
       (title, building, place, description),
       (rating, reviews_count)
-    ) -> M.yojson_of_get M.({
+    = DB.find Q.get toilet_id in
+    M.yojson_of_get M.({
       id; creator_name; creator_id; creation_date;
       title; building; place; description;
       rating; reviews_count;
-    })) toilets
-    |> return_json_list 200
+    })
+    |> return_json 200
   in try%lwt
     logic
     |> V.validate_uuid_param (Opium.Router.param req "toilet")
