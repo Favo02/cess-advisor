@@ -4,6 +4,21 @@ module Query = struct
   open Caqti_request.Infix
   open Caqti_type.Std
 
+  let me =
+    string ->! tup2
+      (tup2 string string)
+      (tup3 int int (option float)) @@
+    "SELECT
+      u.id, u.username,
+      COUNT(DISTINCT t.id) AS toilets_created,
+      COUNT(DISTINCT r.id) AS reviews_authored,
+      AVG(r.rating) AS average_review_rating
+    FROM users u
+    LEFT JOIN toilets t ON u.id = t.creator
+    LEFT JOIN reviews r ON u.id = r.author
+    WHERE u.id = ?
+    GROUP BY u.id, u.username"
+
   let check_username_free =
     string ->! bool @@
     "SELECT EXISTS (SELECT * FROM users WHERE username = ?)"
@@ -14,6 +29,14 @@ module Query = struct
 end
 
 module Models = struct
+  type me = {
+    user_id               : string;
+    username              : string;
+    toilets_created       : int;
+    reviews_authored      : int;
+    average_review_rating : float option;
+  } [@@deriving yojson] (* no need to validate, read from db *)
+
   type create = {
     username : string; [@regex "^[a-zA-Z0-9]{4,16}$"]
     password : string; [@custom Common.Validation.custom_password]
@@ -28,14 +51,22 @@ module Q = Query
 module M = Models
 
 let me req =
-  let id = Session.find "id" req in
-  let username = Session.find "username" req in
-  match id, username with
-  | Some user_id, Some username -> return 200 [
-      ("id", user_id);
-      ("username", username)
-    ]
-  | _ -> error 401 "unauthorized" "not logged in"
+  let logic _ =
+    match Session.find "id" req with
+    | None -> error 400 "invalid request" "no session id found"
+    | Some id ->
+      let%lwt
+        (user_id, username),
+        (toilets_created, reviews_authored, average_review_rating)
+      = DB.find Q.me id in
+      M.yojson_of_me M.({
+        user_id; username;
+        toilets_created; reviews_authored; average_review_rating;
+      })
+      |> return_json 200
+  in try%lwt
+    logic ()
+  with _ -> error 400 "invalid request" "generic error, please report this"
 
 let create req =
   let logic (json : M.create) =
