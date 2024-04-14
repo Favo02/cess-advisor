@@ -18,7 +18,7 @@ let require_no_login =
     | _, Some exp when float_of_string exp < Unix.time () -> next req
     | _ -> error 401 "unauthorized" "already logged in"
   in
-  Rock.Middleware.create ~filter: require_no_login ~name: "require login"
+  Rock.Middleware.create ~filter: require_no_login ~name: "require no login"
 
 let verify_expiration =
   let verify_expiration next req =
@@ -27,4 +27,6 @@ let verify_expiration =
     | Some exp when float_of_string exp > Unix.time () -> next req
     | _ -> session_error 401 "unauthorized" "session expired" []
   in
-  Rock.Middleware.create ~filter: verify_expiration ~name: "check expiration date"
+  Rock.Middleware.create ~filter: verify_expiration ~name: "verify expiration"
+
+let logger = Opium.Middleware.logger

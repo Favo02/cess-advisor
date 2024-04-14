@@ -12,13 +12,13 @@ let public = Web.choose ~scope: "/api" ~middlewares: [] [
 ]
 
 (* routes accessible only to users not logged in *)
-let no_auth = Web.choose ~scope: "/api" ~middlewares: [ require_no_login ] [
+let no_auth = Web.choose ~scope: "/api" ~middlewares: [ require_no_login; ] [
   Web.post  "/login"            Handlers.Login.login;
   Web.post  "/users/create"     Handlers.Users.create;
 ]
 
 (* routes accessible only to logged users *)
-let auth = Web.choose ~scope: "/api" ~middlewares: [ require_login; verify_expiration ] [
+let auth = Web.choose ~scope: "/api" ~middlewares: [ require_login; verify_expiration; ] [
   Web.get   "/login/verify"     Handlers.Login.verify;
   Web.get   "/users/me"         Handlers.Users.me;
   Web.post  "/logout"           Handlers.Login.logout;
@@ -26,7 +26,7 @@ let auth = Web.choose ~scope: "/api" ~middlewares: [ require_login; verify_expir
   Web.post  "/reviews/create"   Handlers.Reviews.create;
 ]
 
-let router = Web.choose ~middlewares: [ Web.Middleware.error () ] [
+let router = Web.choose ~middlewares: [ logger; ] [
   public;
   no_auth;
   auth;
@@ -38,4 +38,6 @@ let services = [
   Web.Http.register router;
 ]
 
-let () = App.empty |> App.with_services services |> App.run
+let () =
+  (* Logs.set_level (Some Logs.Debug); *) (* log also request and response body *)
+  App.empty |> App.with_services services |> App.run
