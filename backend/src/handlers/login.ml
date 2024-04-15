@@ -38,7 +38,7 @@ let login req =
         ] [
           ("id",          user_id);
           ("username",    json.username);
-          ("expiration",  expiration ());
+          ("expiration",  expiration ~seconds:86400 ());
         ]
   in try%lwt
     logic

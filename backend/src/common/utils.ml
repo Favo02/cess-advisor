@@ -1,6 +1,6 @@
 (* return expiration epoch (current epoch + 1h) *)
-let expiration () =
-  Unix.time () +. 3600.
+let expiration ?(seconds = 3600) () =
+  Unix.time () +. float_of_int seconds
   |> int_of_float
   |> Printf.sprintf "%d"
 
