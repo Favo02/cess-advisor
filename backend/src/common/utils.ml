@@ -26,11 +26,11 @@ let return_json_list (status : int) (json : Yojson.Safe.t list) =
   |> Lwt.return
 
 (* same as return, but also sets ~session *)
-let session_return (status : int) (json : (string * string) list) (session : (string * string) list) =
+let session_return ?(max_age = 86400L) (status : int) (json : (string * string) list) (session : (string * string) list) =
   Opium.Response.of_json
     ?status: (Some (Opium.Status.of_code status))
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
-  |> Session.set_cookie ~max_age:86400L ~scope:"/" ~same_site:"strict" ~http_only:true session
+  |> Session.set_cookie ~max_age:max_age ~scope:"/" ~same_site:"strict" ~http_only:true session
   |> Lwt.return
 
 (* same as return but with fixed json payload fiels "error" and "message" *)
