@@ -82,7 +82,7 @@ let create req =
       ] [
         ("id",          user_id);
         ("username",    json.username);
-        ("expiration",  expiration ());
+        ("expiration",  expiration ~seconds:86400 ());
       ]
     | _ -> error 400 "invalid username" "username already taken"
   in try%lwt

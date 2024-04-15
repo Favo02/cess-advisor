@@ -38,7 +38,7 @@ let login req =
         ] [
           ("id",          user_id);
           ("username",    json.username);
-          ("expiration",  expiration ());
+          ("expiration",  expiration ~seconds:86400 ());
         ]
   in try%lwt
     logic
@@ -47,6 +47,6 @@ let login req =
     |> V.validate_json req
   with _ -> error 400 "invalid request" "generic error, please report this"
 
-let logout _ = session_return 200 [("message", "logout successful")] []
+let logout _ = session_return ~max_age:0L 200 [("message", "logout successful")] []
 
 let verify _ = return 200 [("message", "valid login")]

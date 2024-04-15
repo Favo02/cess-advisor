@@ -1,17 +1,8 @@
 (* return expiration epoch (current epoch + 1h) *)
-let expiration () =
-  Unix.time () +. 3600.
+let expiration ?(seconds = 3600) () =
+  Unix.time () +. float_of_int seconds
   |> int_of_float
   |> Printf.sprintf "%d"
-
-(* return current date in format "YYYY-MM-DD" *)
-let current_date () =
-  let time = Unix.time () in
-  let tm = Unix.localtime time in
-  Printf.sprintf "%04d-%02d-%02d"
-    (1900 + tm.Unix.tm_year)
-    (1 + tm.Unix.tm_mon)
-    tm.Unix.tm_mday
 
 (* send an HTTP response with ~status and ~json payload *)
 let return (status : int) (json : (string * string) list) =
@@ -35,11 +26,11 @@ let return_json_list (status : int) (json : Yojson.Safe.t list) =
   |> Lwt.return
 
 (* same as return, but also sets ~session *)
-let session_return (status : int) (json : (string * string) list) (session : (string * string) list) =
+let session_return ?(max_age = 86400L) (status : int) (json : (string * string) list) (session : (string * string) list) =
   Opium.Response.of_json
     ?status: (Some (Opium.Status.of_code status))
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
-  |> Sihl.Web.Session.set session
+  |> Session.set_cookie ~max_age:max_age ~scope:"/" ~same_site:"strict" ~http_only:true session
   |> Lwt.return
 
 (* same as return but with fixed json payload fiels "error" and "message" *)
