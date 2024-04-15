@@ -30,7 +30,7 @@ let session_return (status : int) (json : (string * string) list) (session : (st
   Opium.Response.of_json
     ?status: (Some (Opium.Status.of_code status))
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
-  |> Sihl.Web.Session.set session
+  |> Session.set_cookie ~max_age:86400L ~scope:"/" ~same_site:"strict" ~http_only:true session
   |> Lwt.return
 
 (* same as return but with fixed json payload fiels "error" and "message" *)
