@@ -1,8 +1,14 @@
-<nav>
-  <a href="/">home</a>
-  <a href="/profile">profile</a>
-  <a href="/login">login</a>
-  <a href="/logout">logout</a>
-</nav>
+<script>
+  import "../app.pcss";
 
-<slot />
+  import Header from "../components/header.svelte";
+  import Footer from "../components/footer.svelte";
+</script>
+
+<Header />
+
+<div class="mt-24">
+  <slot />
+</div>
+
+<Footer />
