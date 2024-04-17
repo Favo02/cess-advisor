@@ -7,7 +7,7 @@
 
 <Header />
 
-<div class="mt-24">
+<div class="">
   <slot />
 </div>
 

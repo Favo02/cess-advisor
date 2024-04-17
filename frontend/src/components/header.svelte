@@ -1,3 +1,7 @@
+<script>
+  import Theme from "./theme.svelte";
+</script>
+
 <div class="navbar bg-base-100 px-20">
   <div class="navbar-start">
     <a href="/"><img src="/logo.png" alt="CessAdvisor logo" class="h-12"></a>
@@ -13,14 +17,17 @@
     </div>
     <a href="/" class="btn btn-ghost text-xl">CessAdvisor</a>
   </div>
+
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <li><a href="/">Home</a></li>
       <li><a href="/toilets">Toilets</a></li>
       <li><a href="/reviews">Reviews</a></li>
+      <li><a href="/profile">Profile</a></li>
     </ul>
   </div>
+
   <div class="navbar-end">
-    <a href="/profile" class="btn">Profile</a>
+    <Theme />
   </div>
 </div>
