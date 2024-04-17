@@ -2,7 +2,7 @@
   import Icon from '@iconify/svelte';
 </script>
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
+<footer class="footer footer-center p-10 bg-base-100 text-base-content">
   <nav class="grid grid-flow-col gap-4">
     <a href="/" class="link link-hover">Home</a>
     <a href="/toilets" class="link link-hover">Toilets</a>
