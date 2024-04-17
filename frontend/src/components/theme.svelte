@@ -1,13 +1,6 @@
 <script>
-  import { onMount } from 'svelte';
-
-  let theme = "halloween";
+  let theme;
   let check;
-
-  onMount(() => {
-		check = false;
-		check = true;
-	});
 
   const themes = [
     "light",
