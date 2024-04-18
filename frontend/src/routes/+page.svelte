@@ -1,5 +1,5 @@
 <script>
-  import Icon from '@iconify/svelte';
+  import Icon from "@iconify/svelte";
 
   let loading = true;
 
@@ -7,7 +7,7 @@
   let toilets_count;
   let reviews_count;
 
-  fetch('/api/stats')
+  fetch("/api/stats")
     .then(response => response.json())
     .then(data => {
       users_count = data.users;
