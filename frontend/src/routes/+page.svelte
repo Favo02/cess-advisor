@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+  import axios from "axios";
   import Icon from "@iconify/svelte";
 
   let loading = true;
@@ -7,15 +9,17 @@
   let toilets_count;
   let reviews_count;
 
-  fetch("/api/stats")
-    .then(response => response.json())
-    .then(data => {
-      users_count = data.users;
-      toilets_count = data.toilets;
-      reviews_count = data.reviews;
-
+  onMount(async () => {
+    try {
+      const response = await axios.get("/api/stats");
+      users_count = response.data.users;
+      toilets_count = response.data.toilets;
+      reviews_count = response.data.reviews;
       loading = false;
-    });
+    } catch (error) {
+      console.error("Error fetching stats");
+    }
+  });
 </script>
 
 <div class="hero min-h-[calc(100vh-15rem)] bg-base-200">
