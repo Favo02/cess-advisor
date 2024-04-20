@@ -2,7 +2,7 @@
   import Theme from "./theme.svelte";
 </script>
 
-<div class="navbar bg-base-100 px-20">
+<div class="navbar bg-base-100 px-20 shadow-lg shadow-primary/10 border-b border-primary/20 fixed z-50">
   <div class="navbar-start">
     <a href="/"><img src="/logo.png" alt="CessAdvisor logo" class="h-12"></a>
     <div class="dropdown">
@@ -15,10 +15,10 @@
         <li><a href="/reviews">Reviews</a></li>
       </ul>
     </div>
-    <a href="/" class="btn btn-ghost text-xl">CessAdvisor</a>
+    <a href="/" class="btn btn-ghost text-xl text-primary ml-4">CessAdvisor</a>
   </div>
 
-  <div class="navbar-center hidden lg:flex">
+  <div class="navbar-center hidden lg:flex font-medium">
     <ul class="menu menu-horizontal px-1">
       <li><a href="/">Home</a></li>
       <li><a href="/toilets">Toilets</a></li>
@@ -27,7 +27,7 @@
     </ul>
   </div>
 
-  <div class="navbar-end">
+  <div class="navbar-end hidden md:inline-flex">
     <Theme />
   </div>
 </div>

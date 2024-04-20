@@ -1,4 +1,6 @@
 <script>
+  export let classes;
+
   let theme;
   let check;
 
@@ -50,6 +52,6 @@
 
 </script>
 
-<button on:click={randomTheme} class="btn btn-primary">Change Theme</button>
+<button on:click={randomTheme} class="btn btn-primary {classes}">Change Theme</button>
 
 <input type="checkbox" class="theme-controller hidden" aria-label={`${theme} theme`} value={theme} checked={check} />
