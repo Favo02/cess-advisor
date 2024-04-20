@@ -7,25 +7,25 @@
 
 ## Tech stack
 
-In short: **OCaml** 🐪 + **JavaScript** ⚛️ + **PostgreSQL** 🐘 + Docker 🐳 + GitHub Actions 🚀
+In short: **OCaml** 🐪 (Sihl) + **JavaScript** 🤢 (Svelte) + **PostgreSQL** 🐘 + Docker 🐳 + GitHub Actions 🚀
 
 > [!TIP]
-> If you want to preserve your mental health, you should **NOT** write JavaScript code. OCaml is just better.
+> If you want to preserve your mental health, you should **NOT** write JavaScript code _(and frontends in general)_. OCaml is just better.
 
 <details>
 <summary>Detailed tech stack</summary>
 
 - Backend: **OCaml** 🐪
   - [Sihl](https://github.com/oxidizing/sihl): OCaml framework for building web apps
+  - [Opium](https://github.com/rgrinberg/opium/): OCaml framework for managing HTTP requests
   - [Caqti](https://github.com/paurkedal/ocaml-caqti): OCaml library for interacting with databases
   - [Yojson](https://github.com/ocaml-community/yojson): OCaml library for JSON serialization
   - [Validate](https://github.com/Axot017/validate): OCaml library for validating schemas
 
 - Frontend: **JavaScript** ⚛️
-  - [React](https://reactjs.org/): JavaScript framework for frontend web development
-  - [Vite](https://vitejs.dev/): React build tool
+  - [Sveltekit](https://kit.svelte.dev/): JavaScript framework for frontend web development
   - [Tailwind CSS](https://tailwindcss.com/): CSS framework
-  - [Shadcn-ui](https://ui.shadcn.com/): React components library
+  - [DaisyUI](https://daisyui.com/): Tailwind components library
 
 - Database: 🐘
   - [PostgreSQL](https://www.postgresql.org/): relational database
