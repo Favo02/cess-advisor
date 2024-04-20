@@ -5,6 +5,7 @@ open Common.Middlewares
 (* routes accessible to everyone *)
 let public = Web.choose ~scope: "/api" ~middlewares: [] [
   Web.get   "/version"          (simple_handler 200 [("version", "0.0.2")]);
+  Web.get   "/stats"            Handlers.Various.stats;
   Web.get   "/toilets"          Handlers.Toilets.get_all;
   Web.get   "/toilets/:toilet"  Handlers.Toilets.get;
   Web.get   "/reviews"          Handlers.Reviews.get_all;
