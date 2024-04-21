@@ -1,7 +1,7 @@
 <script>
   import axios from "axios";
 
-  let promise = axios.get("/api/users/me");
+  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`);
 </script>
 
 <h1>Profile</h1>

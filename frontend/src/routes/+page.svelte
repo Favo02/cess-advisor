@@ -11,7 +11,7 @@
 
   onMount(async () => {
     try {
-      const response = await axios.get("/api/stats");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats`);
       users_count = response.data.users;
       toilets_count = response.data.toilets;
       reviews_count = response.data.reviews;
