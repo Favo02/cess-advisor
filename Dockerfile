@@ -1,4 +1,4 @@
-FROM ocaml/opam:alpine-ocaml-5.0
+FROM ocaml/opam:latest
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY backend .
 COPY .env .
 RUN sudo chown -R opam:nogroup .
 
-RUN sudo apk add gmp-dev libev-dev postgresql14-dev
+RUN sudo apt-get update && sudo apt-get install -y libgmp-dev libev-dev libpq-dev pkg-config
 
 ENV OPAMTIMEOUT=1800
 ENV OPAMSOLVERTIMEOUT=1800
