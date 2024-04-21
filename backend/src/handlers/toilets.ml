@@ -31,7 +31,8 @@ module Query = struct
     FROM toilets t
     INNER JOIN users u ON t.creator = u.id
     LEFT JOIN reviews r ON t.id = r.toilet
-    GROUP BY t.id, u.username"
+    GROUP BY t.id, u.username
+    ORDER BY reviews_count DESC"
 
   let create =
     tup2
