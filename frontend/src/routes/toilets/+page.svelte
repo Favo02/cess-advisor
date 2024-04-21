@@ -19,8 +19,6 @@
 
 </script>
 
-<h1>Toilets</h1>
-
 {#await promise}
   <div class="w-full min-h-screen py-28 bg-base-300 flex justify-center align-middle">
     <span class="loading loading-spinner loading-xl"></span>
