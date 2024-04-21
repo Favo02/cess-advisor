@@ -7,7 +7,11 @@
     try {
       loading = true;
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/logout`);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/logout`,
+        {},
+        { withCredentials: true }
+      );
 
       if (response.status === 200) {
         alert("Logout successful");

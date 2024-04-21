@@ -12,7 +12,8 @@
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/toilets/create`,
-        { title, building, place, description }
+        { title, building, place, description },
+        { withCredentials: true }
       );
 
       if (response.status === 200) {

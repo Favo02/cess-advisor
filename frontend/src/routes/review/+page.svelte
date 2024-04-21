@@ -27,7 +27,8 @@
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/reviews/create`,
-        { toilet_id, rating, description, paper, soap, dryer, hotwater, clean, temperature }
+        { toilet_id, rating, description, paper, soap, dryer, hotwater, clean, temperature },
+        { withCredentials: true }
       );
 
       if (response.status === 200) {

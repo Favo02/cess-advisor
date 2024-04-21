@@ -1,7 +1,10 @@
 <script>
   import axios from "axios";
 
-  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`);
+  let promise = axios.get(
+    `${import.meta.env.VITE_API_URL}/api/users/me`,
+    { withCredentials: true }
+  );
 </script>
 
 <h1>Profile</h1>
