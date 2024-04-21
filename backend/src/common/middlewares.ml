@@ -30,3 +30,5 @@ let verify_expiration =
   Rock.Middleware.create ~filter: verify_expiration ~name: "verify expiration"
 
 let logger = Opium.Middleware.logger
+
+let allow_cors = Opium.Middleware.allow_cors ()
