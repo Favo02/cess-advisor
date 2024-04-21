@@ -83,22 +83,13 @@
       </h4>
       <h4>
         <Icon icon="iconoir:sparks-solid" class="w-6 h-6 inline" />
-        Level of cleanliness: <span class="uppercase text-xs font-bold text-primary/70">{clean / 2} out of 5</span>
+        Cleanliness: <span class="uppercase text-xs font-bold text-primary/70">{clean / 2} out of 5</span>
       </h4>
       <h4>
         <Icon icon="bx:bxs-thermometer" class="w-6 h-6 inline" />
         Temperature: <span class="uppercase text-xs font-bold text-primary/70">{temperature / 2} out of 5</span>
       </h4>
 
-
-
-
-      <!-- paper,
-      soap,
-      dryer,
-      hotwater,
-      clean,
-      temperature -->
     </div>
 
     <div class="p-4 flex items-center text-xs text-neutral-content/70">
