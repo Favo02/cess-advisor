@@ -15,7 +15,8 @@ module Query = struct
       r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
     FROM reviews r
     INNER JOIN toilets t ON r.toilet = t.id
-    INNER JOIN users u ON r.author = u.id"
+    INNER JOIN users u ON r.author = u.id
+    ORDER BY date DESC"
 
   let create =
     tup3
