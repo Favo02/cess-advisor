@@ -1,0 +1,10 @@
+services:
+
+  website-cessadvisorapi:
+    build: .
+    container_name: website-cessadvisorapi
+    restart: unless-stopped
+    ports:
+      - 3003:3000
+    volumes:
+      - './logs:/app/logs'

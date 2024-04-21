@@ -8,8 +8,8 @@ RUN sudo chown -R opam:nogroup .
 
 RUN sudo apk add gmp-dev libev-dev postgresql14-dev
 
-ENV OPAMTIMEOUT=1200
-ENV OPAMSOLVERTIMEOUT=1200
+ENV OPAMTIMEOUT=1800
+ENV OPAMSOLVERTIMEOUT=1800
 ENV ROOT_PATH=/app
 
 RUN opam update && opam upgrade -y
