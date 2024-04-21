@@ -39,9 +39,8 @@ TL;DR: **Docker** 🐳 + **GitHub Actions** 🤖 for backend and **Cloudflare Pa
 <summary>Detailed deployment</summary>
 
 - Backend: **Docker** 🐳 + **GitHub Actions** 🤖
-  - each time a commit is pushed to the `main` branch, `build-backend` GitHub action is triggered
-  - the action builds the Docker image and pushes it to the GitHub container registry
-  - the image is then pulled by my homelab server (periodically checked with Watchtower) and the container is started
+  - each time a commit is pushed to the `main` branch, `deploy-backend` GitHub action is triggered
+  - the action connects via ssh to the server, pulls the changes and rebuilds the Docker container
   - the backend is available at [https://cessadvisorapi.favo02.dev](https://cessadvisorapi.favo02.dev)
 
 - **Frontend**: **Cloudflare Pages** ☁️
