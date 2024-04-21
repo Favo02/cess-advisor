@@ -22,7 +22,7 @@
   });
 </script>
 
-<div class="hero min-h-[calc(100vh-15rem)] bg-base-200">
+<div class="hero min-h-[calc(100vh-15rem)] bg-base-300">
   <div class="hero-content text-center">
     <div class="max-w-3xl">
       <h1 class="text-5xl font-bold">Know the <span class="text-primary">toilets</span> around you.</h1>
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<div class="w-full bg-base-200 flex justify-center pb-40">
+<div class="w-full bg-base-300 flex justify-center pb-40">
   <div class="stats shadow-lg shadow-primary/20 flex flex-col md:grid">
 
     <div class="stat">
