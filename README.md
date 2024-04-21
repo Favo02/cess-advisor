@@ -42,11 +42,23 @@ TL;DR: **Docker** 🐳 + **GitHub Actions** 🤖 for backend and **Cloudflare Pa
   - each time a commit is pushed to the `main` branch, `deploy-backend` GitHub action is triggered
   - the action connects via ssh to the server, pulls the changes and rebuilds the Docker container
   - the backend is available at [https://cessadvisorapi.favo02.dev](https://cessadvisorapi.favo02.dev)
+  - instructions:
+    - add `HOST`, `USERNAME`, `PORT`, `KEY`, `SCRIPT` secrets to GitHub
+    - add private `KEY` provided in secrets to allowed hosts on server
+    - clone this repository on the server
+    - create `.env` file in the root of the repository (see [.env.template](./.env.template) for reference)
+    - create empty folder `logs` in the root of the repository
+    - `SCRIPT` secret should cd into the repository and run `git pull` and `docker-compose up -d --build --force-recreate`
 
 - **Frontend**: **Cloudflare Pages** ☁️
   - each time a commit is pushed to the `main` branch, the Cloudflare pages integration detects the change
   - the integration builds the Sveltekit app with some magic
   - the frontend is available at [https://cessadvisor.pages.dev](https://cessadvisor.pages.dev) (and [https://cessadvisor.favo02.dev](https://cessadvisor.favo02.dev))
+  - instructions:
+    - create a new Cloudflare Pages project
+    - follow instructions to connect the project to the GitHub repository
+    - set `Root directory (advanced)` as `frontend`
+    - set environment variables (see [frontend/.env.template](frontend/.env.template))
 
 </details>
 
