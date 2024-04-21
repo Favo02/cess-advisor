@@ -1,16 +1,24 @@
 <script>
   import axios from "axios";
-  // import ToiletCard from "./toiletCard.svelte"
   import Icon from "@iconify/svelte";
   import ReviewCard from "./reviewCard.svelte"
 
+  import { replaceState } from "$app/navigation";
+  import { page } from "$app/stores";
+
   let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/reviews`);
 
-  let filter = ""
+  let filter = $page.url.searchParams.get("q") || "";
+
+  function updateFilter(event) {
+    replaceState(`/reviews?q=${event.target.value}`)
+    filter = event.target.value;
+  }
 
   function isValid(review) {
-    const { title, place, building, author_name, description } = review;
+    const { toilet_id, title, place, building, author_name, description } = review;
     return (
+      toilet_id.toLowerCase().includes(filter) ||
       title.toLowerCase().includes(filter) ||
       place.toLowerCase().includes(filter) ||
       building.toLowerCase().includes(filter) ||
@@ -32,7 +40,7 @@
 
     <div class="flex flex-col max-w-[90%] mx-auto justify-center md:flex-row">
       <label class="input input-bordered flex items-center gap-2 max-w-[600px] md:mx-8 mb-2">
-        <input type="text" class="grow min-w-[400px]" placeholder="Search" on:input={(event) => filter = event.target.value} />
+        <input type="text" class="grow min-w-[400px]" placeholder="Search" on:input={updateFilter} bind:value={filter} />
         <Icon icon="ic:baseline-search" class="w-6 h-6" />
       </label>
     </div>
@@ -47,7 +55,7 @@
           <div>
             {#each reviews.data.filter(t => isValid(t, filter)) as review, i (review.id)}
               {#if i % 3 === rem}
-                <ReviewCard {review} />
+                <ReviewCard {review} bind:filter={filter} />
               {/if}
             {/each}
           </div>
