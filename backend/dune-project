@@ -21,10 +21,10 @@
  (description "REST API for Cess Advisor, a toilet review system")
  (depends
   (ocaml (>= 5.0.0))
-  (dune (>= 3.15.0))
-  (sihl (>= 3.0.5))
-  (caqti-driver-postgresql (>= 2.1.1))
-  (lwt_ppx (>= 2.1.0))
-  (ppx_yojson_conv (>= v0.16.0))
-  (validate (>= 1.1.0))
-  (safepass (>= 3.0))))
+  dune
+  sihl
+  caqti-driver-postgresql
+  lwt_ppx
+  ppx_yojson_conv
+  validate
+  safepass))
