@@ -18,4 +18,27 @@ async function get(url, headers) {
 
 }
 
-export default { get }
+async function post(url, headers, body) {
+
+  try {
+    const response = await fetch(url, {
+      headers,
+      method: "POST",
+      body: JSON.stringify(body)
+    })
+
+    return {
+      ok: response.ok,
+      status: response.status,
+      json: await response.json(),
+      headers: response.headers,
+    }
+
+  } catch (err) {
+    console.log(err)
+    return { ok: false, status: 500, json: { "error": "API unavailable" }, headers: null }
+  }
+
+}
+
+export default { get, post }

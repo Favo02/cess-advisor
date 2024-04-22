@@ -1,4 +1,3 @@
-import axios from "axios"
 import { API_URL } from "$env/static/private"
 import { fail, redirect, error } from "@sveltejs/kit"
 import schemas from "../../utils/schemas"
@@ -35,34 +34,32 @@ export const actions = {
     }
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
+    const response = await f.post(
+      `${API_URL}/api/users/create`,
+      headers,
+      { username, password }
+    )
 
-		try {
-
-      const response = await axios.post(
-        `${API_URL}/api/users/create`,
-        { username, password },
-        { headers }
-      )
-
-      // FIXME: really really awful, but it works
-      const cookieString = response.headers["set-cookie"][0]
-      const cookie = cookieString.substring(cookieString.indexOf("=")+1).split(";")[0]
-
-      cookies.set("_session", cookie, {
-        path: "/",
-        sameSite: "Strict",
-        maxAge: 60 * 60 * 24,
-        secure: true,
-        httpOnly: true
-      })
-
-    } catch (e) {
-      if (e.response.data.message === "username already taken") {
+    if (!response.ok) {
+      if (response.status === 400) {
         return fail(400, { error: "Username already taken" })
       }
-      return fail(400, { error: "Error creating user" })
+
+      return error(500, "Error creating user, please try again later.")
     }
 
-		return redirect(302, "/profile")
+    // TODO: fix this awful shit (but it works)
+    const cookieString = response.headers.get("set-cookie")
+    const cookie = cookieString.substring(cookieString.indexOf("=")+1).split(";")[0]
+
+    cookies.set("_session", cookie, {
+      path: "/",
+      sameSite: "Strict",
+      maxAge: 60 * 60 * 24,
+      secure: true,
+      httpOnly: true
+    })
+
+		return redirect(302, "/profile") // TODO: notification
 	}
 }

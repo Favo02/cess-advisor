@@ -1,4 +1,3 @@
-import axios from "axios"
 import { API_URL } from "$env/static/private"
 import { fail, redirect, error } from "@sveltejs/kit"
 import schemas from "../../../utils/schemas"
@@ -38,19 +37,24 @@ export const actions = {
     }
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
+    const response = await f.post(
+      `${API_URL}/api/toilets/create`,
+      headers,
+      { title, building, place, description }
+    )
 
-		try {
+    if (!response.ok) {
+      if (data.status === 401) {
+        return redirect(302, "/login") // TODO: notification, redirect
+      }
+      if (response.status === 400) {
+        return fail(400, { error: "Error creating toilet" })
+      }
 
-      await axios.post(
-        `${API_URL}/api/toilets/create`,
-        { title, building, place, description },
-        { headers }
-      )
-
-    } catch (e) {
-      return fail(400, { error: "Error creating toilet" })
+      return error(500, "Error creating toilet.")
     }
 
-		return redirect(302, "/toilets")
-	}
+
+		return redirect(302, "/toilets") // TODO: notification
+  }
 }
