@@ -1,25 +1,26 @@
 <script>
-  import { onMount } from "svelte";
-  import axios from "axios";
-  import Icon from "@iconify/svelte";
+  import { onMount } from "svelte"
+  import axios from "axios"
+  import Icon from "@iconify/svelte"
+  import toast from "svelte-french-toast"
 
-  let loading = true;
+  let loading = true
 
-  let users_count;
-  let toilets_count;
-  let reviews_count;
+  let users_count
+  let toilets_count
+  let reviews_count
 
   onMount(async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats`);
-      users_count = response.data.users;
-      toilets_count = response.data.toilets;
-      reviews_count = response.data.reviews;
-      loading = false;
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats`)
+      users_count = response.data.users
+      toilets_count = response.data.toilets
+      reviews_count = response.data.reviews
+      loading = false
     } catch (error) {
-      console.error("Error fetching stats");
+      toast.error("Error fetching stats.")
     }
-  });
+  })
 </script>
 
 <div class="hero min-h-[calc(100vh-15rem)] bg-base-300">

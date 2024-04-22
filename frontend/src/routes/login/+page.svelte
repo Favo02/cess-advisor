@@ -1,42 +1,44 @@
 <script>
-  import axios from "axios";
-  import checkAuth from "../../components/checkAuth";
-  import Icon from "@iconify/svelte";
+  import axios from "axios"
+  import checkAuth from "../../components/checkAuth"
+  import Icon from "@iconify/svelte"
   import { onMount } from "svelte"
+  import toast from "svelte-french-toast"
 
-  let username = "";
-  let password = "";
+  let username = ""
+  let password = ""
 
-  let loading = true;
+  let loading = true
 
   onMount(async () => {
     if (await checkAuth()) {
-      alert("You are already logged in");
-      window.location.href = "/profile";
+      toast.error("You are already logged in")
+      window.location.href = "/profile"
     }
-    loading = false;
-  });
+    loading = false
+  })
 
   async function handleSubmit() {
-    loading = true;
+    loading = true
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/login`,
         { username, password },
         { withCredentials: true }
-      );
+      )
 
       if (response.status === 200) {
-        window.location.href = "/profile";
+        toast.success("Logged in successfully")
+        window.location.href = "/profile"
       } else {
-        alert("Error creating review");
+        toast.error("Error logging in")
       }
 
     } catch (error) {
-      alert(`Error: ${error.response.data.error} - ${error.response.data.message}`);
+      toast.error("Error logging in")
     } finally {
-      loading = false;
+      loading = false
     }
   }
 

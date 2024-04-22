@@ -1,44 +1,46 @@
 <script>
   import Icon from "@iconify/svelte"
-  import axios from "axios";
-  import { onMount } from "svelte";
+  import axios from "axios"
+  import { onMount } from "svelte"
   import checkAuth from "../../components/checkAuth"
+  import toast from "svelte-french-toast"
 
   let promise = axios.get(
     `${import.meta.env.VITE_API_URL}/api/users/me`,
     { withCredentials: true }
-  );
+  )
 
-  let loading = true;
+  let loading = true
 
   onMount(async () => {
     if (!(await checkAuth())) {
-      alert("You are not logged in");
-      window.location.href = "/login";
+      toast.error("You are not logged in")
+      window.location.href = "/login"
     }
-    loading = false;
-  });
+    loading = false
+  })
 
   async function handleSubmit() {
-    loading = true;
+    loading = true
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/logout`,
         {},
         { withCredentials: true }
-      );
+      )
 
       if (response.status === 200) {
-        window.location.href = "/";
+        toast.success("Logged out successfully")
+        window.location.href = "/"
       } else {
-        alert("Error logging out");
+        toast.error("Error logging out")
       }
 
     } catch (error) {
-      alert(`Error: ${error.response.data.error} - ${error.response.data.message}`);
+      toast.error("Error logging out")
     } finally {
-      loading = false;
+      loading = false
     }
   }
 

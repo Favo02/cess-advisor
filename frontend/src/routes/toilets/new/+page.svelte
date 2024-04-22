@@ -3,21 +3,22 @@
   import axios from "axios"
   import { onMount } from "svelte"
   import checkAuth from "../../../components/checkAuth"
+  import toast from "svelte-french-toast"
 
-  let title = "";
-  let building = "";
-  let place = "";
-  let description = "";
+  let title = ""
+  let building = ""
+  let place = ""
+  let description = ""
 
-  let loading = true;
+  let loading = true
 
   onMount(async () => {
     if (!(await checkAuth())) {
-      alert("You are not logged in");
-      window.location.href = "/login";
+      toast.error("You are not logged in")
+      window.location.href = "/login"
     }
-    loading = false;
-  });
+    loading = false
+  })
 
   async function handleSubmit() {
 
@@ -26,17 +27,17 @@
         `${import.meta.env.VITE_API_URL}/api/toilets/create`,
         { title, building, place, description },
         { withCredentials: true }
-      );
+      )
 
       if (response.status === 200) {
-        alert("Toilet created successfully!");
-        window.location.href = "/toilets";
+        toast.success("Toilet created successfully")
+        window.location.href = "/toilets"
       } else {
-        alert("Error creating toilet");
+        toast.error("Error creating toilet")
       }
 
     } catch (error) {
-      alert(`Error: ${error.response.data.error} - ${error.response.data.message}`);
+      toast.error("Error creating toilet")
     }
 
   }

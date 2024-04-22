@@ -1,8 +1,8 @@
 <script>
-  export let classes;
+  export let classes
 
-  let theme;
-  let check;
+  let theme
+  let check
 
   const themes = [
     "light",
@@ -37,17 +37,17 @@
     "dim",
     "nord",
     "sunset",
-  ];
+  ]
 
   function randomTheme() {
-    let random = Math.floor(Math.random() * themes.length);
+    let random = Math.floor(Math.random() * themes.length)
     while (theme == themes[random]) {
-      random = Math.floor(Math.random() * themes.length);
+      random = Math.floor(Math.random() * themes.length)
     }
-    theme = themes[random];
+    theme = themes[random]
     console.log(`The new theme is ${theme}!`)
-    check = false;
-    check = true;
+    check = false
+    check = true
   }
 
 </script>

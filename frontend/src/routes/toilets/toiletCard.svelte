@@ -1,7 +1,7 @@
 <script>
   import Icon from "@iconify/svelte"
 
-  export let toilet;
+  export let toilet
 
   const {
     id,
@@ -14,7 +14,7 @@
     description,
     rating,
     reviews_count
-  } = toilet;
+  } = toilet
 
   let goodness = {
     0: ["Terrible", "bg-red-500", "text-red-900"],
@@ -23,10 +23,10 @@
     3: ["Average", "bg-yellow-400", "text-yellow-700"],
     4: ["Good", "bg-green-500", "text-green-800"],
     5: ["Very good", "bg-green-400", "text-green-700"]
-  };
+  }
 
   function formatDate(date) {
-    return new Date(date).toLocaleDateString();
+    return new Date(date).toLocaleDateString()
   }
 </script>
 
