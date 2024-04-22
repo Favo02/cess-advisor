@@ -51,7 +51,3 @@
 
   </div>
 </div>
-
-<div class="flex justify-center bg-base-300">
-  <h1 class="max-w-[600px] opacity-70 mb-20 text-justify rounded-md p-8 text-black bg-red-400 border-red-950 border-4">WARNING: the app is having some issues with CORS and cookies. If the login don't work, please enable third party cookies in your browser. Sorry for the inconvenience, working on a fix. <a target="_blank" href="https://github.com/Favo02/cess-advisor/issues/9" class="link">Issue on GitHub</a>.</h1>
-</div>
