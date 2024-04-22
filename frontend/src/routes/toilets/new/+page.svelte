@@ -4,6 +4,7 @@
   import { onMount } from "svelte"
   import checkAuth from "../../../utils/checkAuth"
   import toast from "svelte-french-toast"
+  import schemas from "../../../utils/schemas"
 
   let title = ""
   let building = ""
@@ -21,6 +22,13 @@
   })
 
   async function handleSubmit() {
+
+    const valid = schemas.toilet.safeParse({ title, building, place, description })
+    if (!valid.success) {
+      toast.error(`Invalid ${valid.error.issues[0].path[0]}`)
+      loading = false
+      return
+    }
 
     try {
       const response = await axios.post(

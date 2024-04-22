@@ -4,6 +4,7 @@
   import Icon from "@iconify/svelte"
   import { onMount } from "svelte"
   import toast from "svelte-french-toast"
+  import schemas from "../../utils/schemas"
 
   let username = ""
   let password = ""
@@ -20,6 +21,13 @@
 
   async function handleSubmit() {
     loading = true
+
+    const valid = schemas.login.safeParse({ username, password })
+    if (!valid.success) {
+      toast.error(`Invalid ${valid.error.issues[0].path[0]}`)
+      loading = false
+      return
+    }
 
     try {
       const response = await axios.post(

@@ -6,6 +6,7 @@
   import { onMount } from "svelte"
   import checkAuth from "../../utils/checkAuth"
   import toast from "svelte-french-toast"
+  import schemas from "../../utils/schemas"
 
   let toilet = $page.url.searchParams.get("t") || ""
 
@@ -34,6 +35,13 @@
   let temperature = 0
 
   async function handleSubmit() {
+
+    const valid = schemas.review.safeParse({ toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature })
+    if (!valid.success) {
+      toast.error(`Invalid ${valid.error.issues[0].path[0]}`)
+      loading = false
+      return
+    }
 
     try {
       const response = await axios.post(
