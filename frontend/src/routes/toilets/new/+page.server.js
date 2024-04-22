@@ -1,7 +1,24 @@
 import axios from "axios"
 import { API_URL } from "$env/static/private"
-import { fail, redirect } from "@sveltejs/kit"
+import { fail, redirect, error } from "@sveltejs/kit"
 import schemas from "../../../utils/schemas"
+
+export async function load({ cookies }) {
+
+  const headers = { Cookie: `_session=${cookies.get("_session")}` }
+
+  try {
+    await axios.get(`${API_URL}/api/login/verify`, { headers })
+    return { loing: true }
+
+  } catch (e) {
+    if (e?.response?.status === 401) {
+      return redirect(302, "/login")
+    }
+
+    error(400, "Error fetching profile, please try again later.")
+  }
+}
 
 export const actions = {
 
