@@ -64,7 +64,7 @@ TL;DR: **Docker** 🐳 + **GitHub Actions** 🤖 for backend and **Cloudflare Pa
 
 ## Contributing
 
-Each contribution is **welcome**, especially building alteranive better frontends _(if you are brave enough to write JavaScript code)_ that uses the same API.
+Each contribution is **welcome**, especially building alteranive better frontends _(if you are brave enough to write JavaScript code)_.
 
 Please follow the [conventions](#conventions) below.
 

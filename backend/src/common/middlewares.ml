@@ -31,4 +31,9 @@ let verify_expiration =
 
 let logger = Opium.Middleware.logger
 
-let allow_cors = Opium.Middleware.allow_cors ()
+let allow_cors =
+  let origin = match Sihl.Configuration.read_string "CORS_ORIGIN" with
+    | Some origin -> origin
+    | None -> "*" (* this will make the authorization (Set-Cookie headers) NOT work *)
+  in
+  Opium.Middleware.allow_cors ~origins: [ origin ] ()

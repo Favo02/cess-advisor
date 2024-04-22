@@ -1,16 +1,26 @@
 
 <script>
-  import { page } from '$app/stores';
+  import { page } from "$app/stores";
   import Icon from "@iconify/svelte"
   import axios from "axios"
-  import { onMount } from 'svelte'
+  import { onMount } from "svelte"
+  import checkAuth from "../../components/checkAuth";
 
-  let toilet_id = $page.url.searchParams.get("t") || "";
+  let toilet = $page.url.searchParams.get("t") || "";
 
-  onMount(() => {
-    if (!toilet_id) {
+  let loading = true;
+
+  onMount(async () => {
+    if (!toilet) {
       window.location.href = "/toilets";
+      return;
     }
+
+    if (!(await checkAuth())) {
+      alert("You are not logged in");
+      window.location.href = "/login";
+    }
+    loading = false;
   });
 
   let rating = 0;
@@ -27,12 +37,13 @@
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/reviews/create`,
-        { toilet_id, rating, description, paper, soap, dryer, hotwater, clean, temperature }
+        { toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature },
+        { withCredentials: true }
       );
 
       if (response.status === 200) {
         alert("Review created successfully!");
-        window.location.href = "/toilets";
+        window.location.href = `/reviews?q=${toilet}`;
       } else {
         alert("Error creating review");
       }
@@ -44,6 +55,12 @@
   }
 
 </script>
+
+{#if loading}
+  <div class="w-full min-h-screen py-28 bg-base-300 flex justify-center align-middle">
+    <span class="loading loading-spinner loading-xl"></span>
+  </div>
+{/if}
 
 <div class="w-full py-28 bg-base-300">
   <h1 class="mx-auto text-4xl text-center mb-3 font-bold"><span class="text-primary">Review</span> a toilet</h1>
