@@ -71,6 +71,8 @@
 
   <form class="max-w-sm mx-auto">
 
+    <h1 class="text-justify rounded-md p-8 mb-8 text-black bg-red-400 border-red-950 border-4">WARNING: the app is having some issues with CORS and cookies. If the login don't work, please enable third party cookies in your browser. Sorry for the inconvenience, working on a fix. <a target="_blank" href="https://github.com/Favo02/cess-advisor/issues/9" class="link">Issue on GitHub</a>.</h1>
+
     <div class="pb-6">
       <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Username</label>
       <div class="relative peer">
