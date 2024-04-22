@@ -9,6 +9,7 @@ export async function load() {
     return { stats: response.data }
 
   } catch (e) {
+    console.log(e)
     error(400, "Error fetching homepage, please try again later.")
   }
 
