@@ -1,4 +1,4 @@
-import { API_URL } from "$env/static/private"
+import { env } from "$env/dynamic/private"
 import { fail, redirect, error } from "@sveltejs/kit"
 import schemas from "../../utils/schemas"
 import f from "../../utils/customFetch"
@@ -6,7 +6,7 @@ import f from "../../utils/customFetch"
 export async function load({ cookies }) {
 
   const headers = { Cookie: `_session=${cookies.get("_session")}` }
-  const data = await f.get(`${API_URL}/api/login/verify`, headers)
+  const data = await f.get(`${env.API_URL}/api/login/verify`, headers)
 
   if (data.ok) {
     return redirect(302, "/profile") // TODO: notification
@@ -35,7 +35,7 @@ export const actions = {
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
     const response = await f.post(
-      `${API_URL}/api/users/create`,
+      `${env.API_URL}/api/users/create`,
       headers,
       { username, password }
     )
