@@ -1,23 +1,22 @@
-import axios from "axios"
 import { API_URL } from "$env/static/private"
 import { fail, redirect, error } from "@sveltejs/kit"
 import schemas from "../../../utils/schemas"
+import f from "../../../utils/customFetch"
 
 export async function load({ params, cookies }) {
 
   const headers = { Cookie: `_session=${cookies.get("_session")}` }
+  const data = await f.get(`${API_URL}/api/login/verify`, headers)
 
-  try {
-    await axios.get(`${API_URL}/api/login/verify`, { headers })
-    return { toilet: params.toilet }
-
-  } catch (e) {
-    if (e?.response?.status === 401) {
-      return redirect(302, "/login")
+  if (!data.ok) {
+    if (data.status === 401) {
+      return redirect(302, "/login") // TODO: notification, redirect
     }
 
-    error(400, "Error fetching profile, please try again later.")
+    return error(500, "Error fetching user, please try again later.")
   }
+
+  return { toilet: params.toilet }
 }
 
 export const actions = {
@@ -43,19 +42,24 @@ export const actions = {
     }
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
+    const response = await f.post(
+      `${API_URL}/api/reviews/create`,
+      headers,
+      { toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature }
+    )
 
-		try {
+    if (!response.ok) {
+      if (data.status === 401) {
+        return redirect(302, "/login") // TODO: notification, redirect
+      }
+      if (response.status === 400) {
+        return fail(400, { error: "Error creating review" })
+      }
 
-      await axios.post(
-        `${API_URL}/api/reviews/create`,
-        { toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature },
-        { headers }
-      )
-
-    } catch (e) {
-      return fail(400, { error: "Error creating review" })
+      return error(500, "Error creating review.")
     }
 
-		return redirect(302, `/reviews?q=${toilet}`)
-	}
+
+		return redirect(302, `/reviews?q=${toilet}`) // TODO: notification
+  }
 }

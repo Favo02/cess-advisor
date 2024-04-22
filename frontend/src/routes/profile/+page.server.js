@@ -1,23 +1,21 @@
-import axios from "axios"
 import { API_URL } from '$env/static/private';
-import { error, redirect, fail } from "@sveltejs/kit"
+import { error, redirect } from "@sveltejs/kit"
+import f from "../../utils/customFetch";
 
 export async function load({ cookies }) {
 
   const headers = { Cookie: `_session=${cookies.get("_session")}` }
+  const data = await f.get(`${API_URL}/api/users/me`, headers)
 
-  try {
-    const response = await axios.get(`${API_URL}/api/users/me`, { headers })
-    return { profile: response.data }
-
-  } catch (e) {
-    if (e?.response?.status === 401) {
-      return redirect(302, "/login")
+  if (!data.ok) {
+    if (data.status === 401) {
+      return redirect(302, "/login") // TODO: notification, redirect
     }
 
-    error(400, "Error fetching profile, please try again later.")
+    return error(500, "Error fetching profile, please try again later.")
   }
 
+  return { profile: data.json }
 }
 
 export const actions = {
@@ -25,31 +23,24 @@ export const actions = {
 	logout: async function ({ cookies }) {
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
+    const response = await f.post(
+      `${API_URL}/api/logout`,
+      headers,
+      {}
+    )
 
-		try {
-
-      const response = await axios.post(
-        `${API_URL}/api/logout`,
-        {},
-        { headers }
-      )
-
-      if (response.status === 200) {
-        cookies.set("_session", "", {
-          path: "/",
-          sameSite: "Strict",
-          maxAge: -1,
-          secure: true,
-          httpOnly: true
-        })
-      } else {
-        return fail(400, { error: "Error logging out" })
-      }
-
-    } catch (e) {
-      return fail(400, { error: "Error logging out" })
+    if (!response.ok) {
+      return error(500, "Error logging out, please try again later.")
     }
 
-		return redirect(302, "/")
-	}
+    cookies.set("_session", "", {
+      path: "/",
+      sameSite: "Strict",
+      maxAge: -1,
+      secure: true,
+      httpOnly: true
+    })
+
+		return redirect(302, "/") // TODO: notification
+  }
 }
