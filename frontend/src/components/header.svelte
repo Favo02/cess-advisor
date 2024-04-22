@@ -13,6 +13,8 @@
         <li><a href="/">Home</a></li>
         <li><a href="/toilets">Toilets</a></li>
         <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/login">Login</a></li>
       </ul>
     </div>
     <a href="/" class="btn btn-ghost text-xl text-primary ml-4">CessAdvisor</a>
@@ -24,6 +26,7 @@
       <li><a href="/toilets">Toilets</a></li>
       <li><a href="/reviews">Reviews</a></li>
       <li><a href="/profile">Profile</a></li>
+      <li><a href="/login">Login</a></li>
     </ul>
   </div>
 

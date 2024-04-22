@@ -11,6 +11,8 @@ TL;DR: **OCaml** 🐪 (Sihl) + **JavaScript** 🤢 (SvelteKit) + **PostgreSQL** 
 > [!TIP]
 > If you want to preserve your mental health, you should **NOT** write JavaScript code _(and frontends in general)_. OCaml is just better.
 
+The project started as an excuse to _play around_ with **OCaml**, but I needed a _frontend_ to make it useful. I tried to pick the _simplest_ one and ended up with **Svelte**. But I absolutely _fucked up_ and started a **SvelteKit** project (the docs don't mention how to setup a _vanilla Svelte_ project). So I ended up writing SSR pages and basically **two backends**.
+
 <details>
 <summary>Detailed tech stack</summary>
 
@@ -53,7 +55,7 @@ TL;DR: **Docker** 🐳 + **GitHub Actions** 🤖 for backend and **Cloudflare Pa
 - **Frontend**: **Cloudflare Pages** ☁️
   - each time a commit is pushed to the `main` branch, the Cloudflare pages integration detects the change
   - the integration builds the Sveltekit app with some magic
-  - the frontend is available at [https://cessadvisor.pages.dev](https://cessadvisor.pages.dev) (and [https://cessadvisor.favo02.dev](https://cessadvisor.favo02.dev))
+  - the frontend is available at [https://cessadvisor.pages.dev](https://cessadvisor.pages.dev)
   - instructions:
     - create a new Cloudflare Pages project
     - follow instructions to connect the project to the GitHub repository
@@ -62,7 +64,11 @@ TL;DR: **Docker** 🐳 + **GitHub Actions** 🤖 for backend and **Cloudflare Pa
 
 </details>
 
-## Contributing
+## Contributing and License
+
+The project is licensed under the **GPLv3** license.
+
+_It was licensed under **CC-BY 4.0** before version 1.0 (commit `a21d9f70c002aa497e5196308c6e71012211e468`), so the code before that commit is licensed under **CC-BY 4.0** (the license is not revokable)._
 
 Each contribution is **welcome**, especially building alteranive better frontends _(if you are brave enough to write JavaScript code)_.
 
@@ -91,7 +97,8 @@ This project follows the following **commit convention**: `<type>(<part>/<scope>
     - `utils`: utility module
   - `fe/`: frontend
     - `components`: components
-    - `pages`: pages _(routing)_
+    - `pages`: pages (client side)
+    - `ssr`: server side rendered pages
     - `services`: interaction with backend API
     - `validators`: form validators
   - `db/`: database
@@ -103,3 +110,7 @@ This project follows the following **commit convention**: `<type>(<part>/<scope>
 _Adding new scopes is allowed if necessary, just add it to the list above._
 
 </details>
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) file.
