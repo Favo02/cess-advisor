@@ -1,6 +1,6 @@
 <script>
   import axios from "axios"
-  import checkAuth from "../../components/checkAuth"
+  import checkAuth from "../../utils/checkAuth"
   import Icon from "@iconify/svelte"
   import { onMount } from "svelte"
   import toast from "svelte-french-toast"

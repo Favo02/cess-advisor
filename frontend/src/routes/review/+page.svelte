@@ -4,7 +4,7 @@
   import Icon from "@iconify/svelte"
   import axios from "axios"
   import { onMount } from "svelte"
-  import checkAuth from "../../components/checkAuth"
+  import checkAuth from "../../utils/checkAuth"
   import toast from "svelte-french-toast"
 
   let toilet = $page.url.searchParams.get("t") || ""
