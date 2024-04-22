@@ -9,6 +9,7 @@ export async function load() {
     return { toilets: response.data }
 
   } catch (e) {
+    console.log(e)
     error(400, "Error fetching toilets, please try again later.")
   }
 

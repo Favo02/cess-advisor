@@ -9,6 +9,7 @@ export async function load() {
     return { reviews: response.data }
 
   } catch (e) {
+    console.log(e)
     error(400, "Error fetching reviews, please try again later.")
   }
 

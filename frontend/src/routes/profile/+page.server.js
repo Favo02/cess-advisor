@@ -15,6 +15,7 @@ export async function load({ cookies }) {
       return redirect(302, "/login")
     }
 
+    console.log(e)
     error(400, "Error fetching profile, please try again later.")
   }
 
