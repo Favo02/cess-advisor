@@ -1,6 +1,6 @@
-import { API_URL } from '$env/static/private';
+import { API_URL } from "$env/static/private"
 import { error, redirect } from "@sveltejs/kit"
-import f from "../../utils/customFetch";
+import f from "../../utils/customFetch"
 
 export async function load({ cookies }) {
 
