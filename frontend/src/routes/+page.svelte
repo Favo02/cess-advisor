@@ -3,28 +3,9 @@
 </svelte:head>
 
 <script>
-  import { onMount } from "svelte"
-  import axios from "axios"
   import Icon from "@iconify/svelte"
-  import toast from "svelte-french-toast"
 
-  let loading = true
-
-  let users_count
-  let toilets_count
-  let reviews_count
-
-  onMount(async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats`)
-      users_count = response.data.users
-      toilets_count = response.data.toilets
-      reviews_count = response.data.reviews
-      loading = false
-    } catch (error) {
-      toast.error("Error fetching stats.")
-    }
-  })
+  export let data
 </script>
 
 <div class="hero min-h-[calc(100vh-15rem)] bg-base-300">
@@ -46,13 +27,7 @@
         <Icon icon="heroicons:users-16-solid" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Users</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {users_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.users}</div>
       <div class="stat-desc">Profiles created</div>
     </div>
 
@@ -61,13 +36,7 @@
         <Icon icon="mingcute:toilet-paper-fill" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Toilets</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {toilets_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.toilets}</div>
       <div class="stat-desc">Toilets registereed</div>
     </div>
 
@@ -76,13 +45,7 @@
         <Icon icon="material-symbols:reviews" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Reviews</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {reviews_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.reviews}</div>
       <div class="stat-desc">Reviews written</div>
     </div>
 
