@@ -6,7 +6,7 @@
 
 ## Tech stack
 
-TL;DR: **OCaml** 🐪 (Sihl) + **JavaScript** 🤢 (Svelte) + **PostgreSQL** 🐘
+TL;DR: **OCaml** 🐪 (Sihl) + **JavaScript** 🤢 (SvelteKit) + **PostgreSQL** 🐘
 
 > [!TIP]
 > If you want to preserve your mental health, you should **NOT** write JavaScript code _(and frontends in general)_. OCaml is just better.

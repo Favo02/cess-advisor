@@ -3,28 +3,9 @@
 </svelte:head>
 
 <script>
-  import { onMount } from "svelte"
-  import axios from "axios"
   import Icon from "@iconify/svelte"
-  import toast from "svelte-french-toast"
 
-  let loading = true
-
-  let users_count
-  let toilets_count
-  let reviews_count
-
-  onMount(async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats`)
-      users_count = response.data.users
-      toilets_count = response.data.toilets
-      reviews_count = response.data.reviews
-      loading = false
-    } catch (error) {
-      toast.error("Error fetching stats.")
-    }
-  })
+  export let data
 </script>
 
 <div class="hero min-h-[calc(100vh-15rem)] bg-base-300">
@@ -46,13 +27,7 @@
         <Icon icon="heroicons:users-16-solid" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Users</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {users_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.users}</div>
       <div class="stat-desc">Profiles created</div>
     </div>
 
@@ -61,13 +36,7 @@
         <Icon icon="mingcute:toilet-paper-fill" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Toilets</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {toilets_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.toilets}</div>
       <div class="stat-desc">Toilets registereed</div>
     </div>
 
@@ -76,19 +45,9 @@
         <Icon icon="material-symbols:reviews" class="h-12 w-12 text-primary" />
       </div>
       <div class="stat-title">Reviews</div>
-      <div class="stat-value">
-        {#if loading}
-          <span class="loading loading-spinner loading-xs"></span>
-        {:else}
-          {reviews_count}
-        {/if}
-      </div>
+      <div class="stat-value">{data.stats.reviews}</div>
       <div class="stat-desc">Reviews written</div>
     </div>
 
   </div>
-</div>
-
-<div class="flex justify-center bg-base-300">
-  <h1 class="max-w-[600px] opacity-70 mb-20 text-justify rounded-md p-8 text-black bg-red-400 border-red-950 border-4">WARNING: the app is having some issues with CORS and cookies. If the login don't work, please enable third party cookies in your browser. Sorry for the inconvenience, working on a fix. <a target="_blank" href="https://github.com/Favo02/cess-advisor/issues/9" class="link">Issue on GitHub</a>.</h1>
 </div>
