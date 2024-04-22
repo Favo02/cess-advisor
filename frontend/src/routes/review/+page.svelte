@@ -1,10 +1,10 @@
 
 <script>
-  import { page } from '$app/stores';
+  import { page } from "$app/stores";
   import Icon from "@iconify/svelte"
   import axios from "axios"
-  import { onMount } from 'svelte'
-  import checkAuth from '../../components/checkAuth';
+  import { onMount } from "svelte"
+  import checkAuth from "../../components/checkAuth";
 
   let toilet = $page.url.searchParams.get("t") || "";
 
