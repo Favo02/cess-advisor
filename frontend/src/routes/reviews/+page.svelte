@@ -1,22 +1,21 @@
 <script>
-  import axios from "axios";
-  import Icon from "@iconify/svelte";
+  import axios from "axios"
+  import Icon from "@iconify/svelte"
   import ReviewCard from "./reviewCard.svelte"
+  import { replaceState } from "$app/navigation"
+  import { page } from "$app/stores"
 
-  import { replaceState } from "$app/navigation";
-  import { page } from "$app/stores";
+  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/reviews`)
 
-  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/reviews`);
-
-  let filter = $page.url.searchParams.get("q") || "";
+  let filter = $page.url.searchParams.get("q") || ""
 
   function updateFilter(event) {
     replaceState(`/reviews?q=${event.target.value}`)
-    filter = event.target.value;
+    filter = event.target.value
   }
 
   function isValid(review) {
-    const { toilet_id, title, place, building, author_name, description } = review;
+    const { toilet_id, title, place, building, author_name, description } = review
     return (
       toilet_id.toLowerCase().includes(filter) ||
       title.toLowerCase().includes(filter) ||
@@ -24,7 +23,7 @@
       building.toLowerCase().includes(filter) ||
       author_name.toLowerCase().includes(filter) ||
       description.toLowerCase().includes(filter)
-    );
+    )
   }
 
 </script>
@@ -65,5 +64,8 @@
     </div>
   </div>
 {:catch error}
-  <p style="color: red">Error: {JSON.stringify(error.response.data)}</p>
+  <div class="w-full py-28 bg-base-300 min-h-[calc(100vh-15rem)] flex justify-center align-middle flex-col">
+    <h1 class="mx-auto text-4xl text-center mb-3 font-bold">There was an <span class="text-primary">error</span> fetching reviews</h1>
+    <p class="mx-auto text-lg text-center mb-10 italic">Please try to refresh.</p>
+  </div>
 {/await}

@@ -1,5 +1,5 @@
 <script>
-  import Icon from "@iconify/svelte";
+  import Icon from "@iconify/svelte"
   import Theme from "./theme.svelte"
 </script>
 <footer class="footer footer-center p-10 bg-base-100 text-base-content shadow-[0_-10px_15px_3px] shadow-primary/5 border-t border-primary/20 z-50">

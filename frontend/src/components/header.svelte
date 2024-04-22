@@ -1,5 +1,5 @@
 <script>
-  import Theme from "./theme.svelte";
+  import Theme from "./theme.svelte"
 </script>
 
 <div class="navbar bg-base-100 px-20 shadow-lg shadow-primary/10 border-b border-primary/20 fixed z-50">

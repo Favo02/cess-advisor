@@ -1,55 +1,64 @@
 
 <script>
-  import { page } from "$app/stores";
+  import { page } from "$app/stores"
   import Icon from "@iconify/svelte"
   import axios from "axios"
   import { onMount } from "svelte"
-  import checkAuth from "../../components/checkAuth";
+  import checkAuth from "../../utils/checkAuth"
+  import toast from "svelte-french-toast"
+  import schemas from "../../utils/schemas"
 
-  let toilet = $page.url.searchParams.get("t") || "";
+  let toilet = $page.url.searchParams.get("t") || ""
 
-  let loading = true;
+  let loading = true
 
   onMount(async () => {
     if (!toilet) {
-      window.location.href = "/toilets";
-      return;
+      window.location.href = "/toilets"
+      return
     }
 
     if (!(await checkAuth())) {
-      alert("You are not logged in");
-      window.location.href = "/login";
+      toast.error("You are not logged in")
+      window.location.href = "/login"
     }
-    loading = false;
-  });
+    loading = false
+  })
 
-  let rating = 0;
-  let description = "";
-  let paper = false;
-  let soap = false;
-  let dryer = false;
-  let hotwater = false;
-  let clean = 0;
-  let temperature = 0;
+  let rating = 0
+  let description = ""
+  let paper = false
+  let soap = false
+  let dryer = false
+  let hotwater = false
+  let clean = 0
+  let temperature = 0
 
   async function handleSubmit() {
+
+    const valid = schemas.review.safeParse({ toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature })
+    if (!valid.success) {
+      toast.error(`Invalid ${valid.error.issues[0].path[0]}`)
+      loading = false
+      return
+    }
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/reviews/create`,
         { toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature },
         { withCredentials: true }
-      );
+      )
 
       if (response.status === 200) {
-        alert("Review created successfully!");
-        window.location.href = `/reviews?q=${toilet}`;
+        toast.success("Review created successfully")
+        window.location.href = `/reviews?q=${toilet}`
       } else {
-        alert("Error creating review");
+        toast.error("Error creating review")
       }
 
     } catch (error) {
-      alert(`Error: ${error.response.data.error} - ${error.response.data.message}`);
+      toast.error("Error creating review")
     }
 
   }

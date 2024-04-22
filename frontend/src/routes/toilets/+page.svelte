@@ -1,20 +1,20 @@
 <script>
-  import axios from "axios";
+  import axios from "axios"
   import ToiletCard from "./toiletCard.svelte"
-  import Icon from "@iconify/svelte";
+  import Icon from "@iconify/svelte"
 
-  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/toilets`);
+  let promise = axios.get(`${import.meta.env.VITE_API_URL}/api/toilets`)
 
   let filter = ""
 
   function isValid(toilet) {
-    const { title, place, building, description } = toilet;
+    const { title, place, building, description } = toilet
     return (
       title.toLowerCase().includes(filter) ||
       place.toLowerCase().includes(filter) ||
       building.toLowerCase().includes(filter) ||
       description.toLowerCase().includes(filter)
-    );
+    )
   }
 
 </script>
@@ -56,5 +56,8 @@
     </div>
   </div>
 {:catch error}
-  <p style="color: red">Error: {JSON.stringify(error.response.data)}</p>
+  <div class="w-full py-28 bg-base-300 min-h-[calc(100vh-15rem)] flex justify-center align-middle flex-col">
+    <h1 class="mx-auto text-4xl text-center mb-3 font-bold">There was an <span class="text-primary">error</span> fetching toilets</h1>
+    <p class="mx-auto text-lg text-center mb-10 italic">Please try to refresh.</p>
+  </div>
 {/await}

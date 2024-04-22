@@ -1,30 +1,39 @@
 <script>
-  import axios from "axios";
-  import Icon from "@iconify/svelte";
-  import checkAuth from "../../components/checkAuth"
-  import { onMount } from "svelte";
+  import axios from "axios"
+  import Icon from "@iconify/svelte"
+  import checkAuth from "../../utils/checkAuth"
+  import { onMount } from "svelte"
+  import toast from "svelte-french-toast"
+  import schemas from "../../utils/schemas"
 
-  let username = "";
-  let password = "";
-  let confirmPassword = "";
+  let username = ""
+  let password = ""
+  let confirmPassword = ""
 
-  let loading = true;
+  let loading = true
 
   onMount(async () => {
     if (await checkAuth()) {
-      alert("You are already logged in");
-      window.location.href = "/profile";
+      toast.error("You are already logged in")
+      window.location.href = "/profile"
     }
-    loading = false;
-  });
+    loading = false
+  })
 
   async function handleSubmit() {
-    loading = true;
+    loading = true
+
+    const valid = schemas.login.safeParse({ username, password })
+    if (!valid.success) {
+      toast.error(`Invalid ${valid.error.issues[0].path[0]}`)
+      loading = false
+      return
+    }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      loading = false;
-      return;
+      toast.error("Passwords do not match")
+      loading = false
+      return
     }
 
     try {
@@ -32,18 +41,19 @@
         `${import.meta.env.VITE_API_URL}/api/users/create`,
         { username, password },
         { withCredentials: true }
-      );
+      )
 
       if (response.status === 201) {
-        window.location.href = "/profile";
+        toast.success("User created successfully")
+        window.location.href = "/profile"
       } else {
-        alert("Error creating user");
+        toast.error("Error creating user")
       }
 
     } catch (error) {
-      alert(`Error: ${error.response.data.error} - ${error.response.data.message}`);
+      toast.error("Error creating user")
     } finally {
-      loading = false;
+      loading = false
     }
   }
 
