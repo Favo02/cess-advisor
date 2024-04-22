@@ -1,16 +1,14 @@
-import axios from "axios"
 import { API_URL } from '$env/static/private';
 import { error } from "@sveltejs/kit"
+import f from "../utils/customFetch";
 
 export async function load() {
 
-  try {
-    const response = await axios.get(`${API_URL}/api/stats`)
-    return { stats: response.data }
+  const data = await f.get(`${API_URL}/api/stats`, {})
 
-  } catch (e) {
-    console.log(e)
-    error(400, "Error fetching homepage, please try again later.")
+  if (!data.ok) {
+    return error(500, "Error fetching homepage, please try again later.")
   }
 
+  return { stats: data.json }
 }

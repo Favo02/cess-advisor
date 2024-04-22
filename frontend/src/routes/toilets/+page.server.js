@@ -1,16 +1,14 @@
-import axios from "axios"
-import { API_URL } from '$env/static/private';
+import { API_URL } from "$env/static/private"
 import { error } from "@sveltejs/kit"
+import f from "../../utils/customFetch"
 
 export async function load() {
 
-  try {
-    const response = await axios.get(`${API_URL}/api/toilets`)
-    return { toilets: response.data }
+  const data = await f.get(`${API_URL}/api/toilets`, {})
 
-  } catch (e) {
-    console.log(e)
-    error(400, "Error fetching toilets, please try again later.")
+  if (!data.ok) {
+    return error(500, "Error fetching toilets, please try again later.")
   }
 
+  return { toilets: data.json }
 }
