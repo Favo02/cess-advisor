@@ -4,13 +4,23 @@
   import Icon from "@iconify/svelte"
   import axios from "axios"
   import { onMount } from 'svelte'
+  import checkAuth from '../../components/checkAuth';
 
   let toilet = $page.url.searchParams.get("t") || "";
 
-  onMount(() => {
+  let loading = true;
+
+  onMount(async () => {
     if (!toilet) {
       window.location.href = "/toilets";
+      return;
     }
+
+    if (!(await checkAuth())) {
+      alert("You are not logged in");
+      window.location.href = "/login";
+    }
+    loading = false;
   });
 
   let rating = 0;
@@ -45,6 +55,12 @@
   }
 
 </script>
+
+{#if loading}
+  <div class="w-full min-h-screen py-28 bg-base-300 flex justify-center align-middle">
+    <span class="loading loading-spinner loading-xl"></span>
+  </div>
+{/if}
 
 <div class="w-full py-28 bg-base-300">
   <h1 class="mx-auto text-4xl text-center mb-3 font-bold"><span class="text-primary">Review</span> a toilet</h1>

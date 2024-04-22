@@ -1,13 +1,22 @@
 <script>
   import axios from "axios";
-
   import Icon from "@iconify/svelte";
+  import checkAuth from "../../components/checkAuth"
+  import { onMount } from "svelte";
 
   let username = "";
   let password = "";
   let confirmPassword = "";
 
-  let loading = false;
+  let loading = true;
+
+  onMount(async () => {
+    if (await checkAuth()) {
+      alert("You are already logged in");
+      window.location.href = "/profile";
+    }
+    loading = false;
+  });
 
   async function handleSubmit() {
     loading = true;
@@ -39,6 +48,12 @@
   }
 
 </script>
+
+{#if loading}
+  <div class="w-full min-h-screen py-28 bg-base-300 flex justify-center align-middle">
+    <span class="loading loading-spinner loading-xl"></span>
+  </div>
+{/if}
 
 <div class="w-full py-28 bg-base-300">
   <h1 class="mx-auto text-4xl text-center mb-3 font-bold">A new user? Wow, <span class="text-primary">register</span></h1>
