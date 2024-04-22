@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>CessAdvisor - Login</title>
+</svelte:head>
+
 <script>
   import axios from "axios"
   import checkAuth from "../../utils/checkAuth"

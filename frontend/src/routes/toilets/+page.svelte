@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>CessAdvisor - Toilets</title>
+</svelte:head>
+
 <script>
   import axios from "axios"
   import ToiletCard from "./toiletCard.svelte"

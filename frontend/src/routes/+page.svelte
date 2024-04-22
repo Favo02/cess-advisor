@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>CessAdvisor - Home</title>
+</svelte:head>
+
 <script>
   import { onMount } from "svelte"
   import axios from "axios"

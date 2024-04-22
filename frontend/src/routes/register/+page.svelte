@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>CessAdvisor - Register</title>
+</svelte:head>
+
 <script>
   import axios from "axios"
   import Icon from "@iconify/svelte"

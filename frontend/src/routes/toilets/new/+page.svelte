@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>CessAdvisor - New toilet</title>
+</svelte:head>
+
 <script>
   import Icon from "@iconify/svelte"
   import axios from "axios"

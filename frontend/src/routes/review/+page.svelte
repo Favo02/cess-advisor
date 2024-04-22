@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>CessAdvisor - New review</title>
+</svelte:head>
 
 <script>
   import { page } from "$app/stores"
