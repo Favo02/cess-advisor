@@ -30,7 +30,7 @@ let session_return ?(max_age = 86400L) (status : int) (json : (string * string) 
   Opium.Response.of_json
     ?status: (Some (Opium.Status.of_code status))
     (`Assoc (json |> List.map (fun (k, v) -> (k, `String v))))
-  |> Session.set_cookie ~max_age:max_age ~scope:"/" ~same_site:"none" ~http_only:true session
+  |> Session.set_cookie ~max_age:max_age ~scope:"/" ~same_site:"strict" ~http_only:true session
   |> Lwt.return
 
 (* same as return but with fixed json payload fiels "error" and "message" *)

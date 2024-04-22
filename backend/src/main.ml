@@ -27,7 +27,7 @@ let auth = Web.choose ~scope: "/api" ~middlewares: [ require_login; verify_expir
   Web.post  "/reviews/create"   Handlers.Reviews.create;
 ]
 
-let router = Web.choose ~middlewares: [ logger; allow_cors; ] [
+let router = Web.choose ~middlewares: [ logger; ] [
   public;
   no_auth;
   auth;
