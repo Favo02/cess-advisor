@@ -1,6 +1,10 @@
 {
   "name": "frontend",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "SvelteKit frontend for Cess Advisor, a toilet review system",
+  "author": "Luca Favini",
+  "repository": "https://github.com/Favo02/cess-advisor",
+  "license": "GPLv3",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

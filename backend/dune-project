@@ -11,7 +11,9 @@
 
 (maintainers "Luca Favini")
 
-(license CC-BY-4.0)
+(license GPLv3)
+
+(version "1.0.0")
 
 (documentation https://github.com/Favo02/cess-advisor)
 
