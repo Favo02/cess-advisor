@@ -5,31 +5,13 @@
 <script>
   import Icon from "@iconify/svelte"
   import toast from "svelte-french-toast"
-  import axios from "axios"
 
   export let data
+  export let form
 
-  async function handleSubmit() {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/logout`,
-        {},
-        { withCredentials: true }
-      )
-
-      if (response.status === 200) {
-        toast.success("Logged out successfully")
-        window.location.href = "/"
-      } else {
-        toast.error("Error logging out")
-      }
-
-    } catch (error) {
-      console.error(error)
-      toast.error("Error logging out")
-    }
+  if (form?.error) {
+    toast.error(form.error)
   }
-
 </script>
 
 <div class="w-full py-28 bg-base-300">
@@ -71,10 +53,12 @@
       <Icon icon="carbon:login" class="w-6 h-6" />
       Edit profile <span class="italic">(coming soon)</span>
     </button>
-    <button class="btn btn-primary mx-auto w-full" on:click={handleSubmit}>
-      <Icon icon="carbon:logout" class="w-6 h-6" />
-      Logout
-    </button>
+    <form method="POST" action="?/logout">
+      <button class="btn btn-primary mx-auto w-full" type="submit">
+        <Icon icon="carbon:logout" class="w-6 h-6" />
+        Logout
+      </button>
+    </form>
 
   </form>
 
