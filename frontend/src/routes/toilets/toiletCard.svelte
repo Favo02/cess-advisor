@@ -66,7 +66,7 @@
       {#if reviews_count > 0}
         <a href="/reviews?q={id}" class="btn btn-primary btn-outline">View reviews</a>
       {/if}
-      <a href="/review?t={id}" class="btn btn-primary">Review</a>
+      <a href="/review/{id}" class="btn btn-primary">Review</a>
     </div>
 
     <div class="p-4 flex items-center text-xs text-neutral-content/70">
