@@ -11,7 +11,7 @@ export async function load({ cookies }) {
     return { profile: response.data }
 
   } catch (e) {
-    if (e.response.status === 401) {
+    if (e?.response?.status === 401) {
       return redirect(302, "/login")
     }
 
