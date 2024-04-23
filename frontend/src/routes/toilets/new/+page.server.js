@@ -26,11 +26,12 @@ export const actions = {
 		const data = await request.formData()
 
     const title = data.get("title")
+    const university = data.get("university")
     const building = data.get("building")
     const place = data.get("place")
     const description = data.get("description")
 
-    const valid = schemas.toilet.safeParse({ title, building, place, description })
+    const valid = schemas.toilet.safeParse({ title, university, building, place, description })
     if (!valid.success) {
       const error = `Invalid ${valid.error.issues[0].path[0]}`
       return fail(400, { error })
@@ -40,7 +41,7 @@ export const actions = {
     const response = await f.post(
       `${env.API_URL}/api/toilets/create`,
       headers,
-      { title, building, place, description }
+      { title, university, building, place, description }
     )
 
     if (!response.ok) {

@@ -10,12 +10,13 @@
   export let form
 
   let title = ""
+  let university = ""
   let building = ""
   let place = ""
   let description = ""
 
   function clientVerification(event) {
-    const valid = schemas.toilet.safeParse({ title, building, place, description })
+    const valid = schemas.toilet.safeParse({ title, university, building, place, description })
     if (!valid.success) {
       const error = `Invalid ${valid.error.issues[0].path[0]}`
       toast.error(error)
@@ -47,12 +48,23 @@
     </div>
 
     <div>
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">University</label>
+      <div class="relative peer">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <Icon icon="mdi:university" class="w-5 h-5" />
+        </div>
+        <input type="text" name="university" bind:value={university} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="Università degli studi di Milano">
+      </div>
+      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">6 - 50 characters, ASCII extendended, no emoji, no control characters except space and newline</p>
+    </div>
+
+    <div>
       <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Building</label>
       <div class="relative peer">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
           <Icon icon="clarity:building-solid" class="w-5 h-5" />
         </div>
-        <input type="text" name="building" bind:value={building} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="Dipartimento di informatica, UNIMI">
+        <input type="text" name="building" bind:value={building} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="Sede città studi - Dipartimento di informatica">
       </div>
       <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">6 - 50 characters, ASCII extendended, no emoji, no control characters except space and newline</p>
     </div>
