@@ -20,6 +20,7 @@ const review = z.object({
 
 const toilet = z.object({
   title: z.string().regex(regex.genericShortText),
+  university: z.string().regex(regex.genericShortText),
   building: z.string().regex(regex.genericShortText),
   place: z.string().regex(regex.genericShortText),
   description: z.string().regex(regex.genericLongText),

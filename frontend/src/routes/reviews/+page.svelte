@@ -18,10 +18,11 @@
   }
 
   function isValid(review) {
-    const { toilet_id, title, place, building, author_name, description } = review
+    const { toilet_id, title, university, place, building, author_name, description } = review
     return (
       toilet_id.toLowerCase().includes(filter) ||
       title.toLowerCase().includes(filter) ||
+      university.toLowerCase().includes(filter) ||
       place.toLowerCase().includes(filter) ||
       building.toLowerCase().includes(filter) ||
       author_name.toLowerCase().includes(filter) ||
@@ -42,7 +43,7 @@
       <Icon icon="ic:baseline-search" class="w-6 h-6" />
     </label>
   </div>
-  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by bathroom <b>title</b>, <b>place</b> and <b>building</b> or by review <b>author</b> and <b>description</b>!</h3>
+  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by bathroom <b>title</b>, <b>university</b>, <b>place</b>, <b>building</b> or by review <b>author</b>, <b>description</b>!</h3>
 
   <div class="max-w-[1300px] mx-auto flex flex-col md:flex-row justify-center">
 

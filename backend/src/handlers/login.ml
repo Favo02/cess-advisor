@@ -6,7 +6,10 @@ module Query = struct
 
   let find_user =
     string ->? tup2 string string @@
-    "SELECT id, password FROM users WHERE username = ?"
+    "SELECT
+      u.id, u.password
+    FROM cessadvisor.users u
+    WHERE u.username = ?"
 end
 
 module Models = struct

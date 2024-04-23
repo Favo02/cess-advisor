@@ -11,9 +11,10 @@
   let filter = ""
 
   function isValid(toilet) {
-    const { title, place, building, description } = toilet
+    const { title, university, place, building, description } = toilet
     return (
       title.toLowerCase().includes(filter) ||
+      university.toLowerCase().includes(filter) ||
       place.toLowerCase().includes(filter) ||
       building.toLowerCase().includes(filter) ||
       description.toLowerCase().includes(filter)
@@ -32,7 +33,7 @@
     </label>
     <a href="/toilets/new" class="btn btn-primary">New toilet</a>
   </div>
-  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by <b>title</b>, <b>place</b>, <b>building</b> or <b>description</b>!</h3>
+  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by <b>title</b>, <b>university</b>, <b>place</b>, <b>building</b> or <b>description</b>!</h3>
 
   <div class="max-w-[1300px] mx-auto flex flex-col md:flex-row justify-center">
 

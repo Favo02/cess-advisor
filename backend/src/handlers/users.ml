@@ -13,19 +13,19 @@ module Query = struct
       COUNT(DISTINCT t.id) AS toilets_created,
       COUNT(DISTINCT r.id) AS reviews_authored,
       AVG(r.rating) AS average_review_rating
-    FROM users u
-    LEFT JOIN toilets t ON u.id = t.creator
-    LEFT JOIN reviews r ON u.id = r.author
+    FROM cessadvisor.users u
+    LEFT JOIN cessadvisor.toilets t ON u.id = t.creator
+    LEFT JOIN cessadvisor.reviews r ON u.id = r.author
     WHERE u.id = ?
     GROUP BY u.id, u.username"
 
   let check_username_free =
     string ->! bool @@
-    "SELECT EXISTS (SELECT * FROM users WHERE username = ?)"
+    "SELECT EXISTS (SELECT * FROM cessadvisor.users u WHERE u.username = ?)"
 
   let create_user =
     tup2 string string ->! string @@
-    "INSERT INTO users (username, password) VALUES (?, ?) RETURNING id"
+    "INSERT INTO cessadvisor.users (username, password) VALUES (?, ?) RETURNING id"
 end
 
 module Models = struct
