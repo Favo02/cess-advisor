@@ -6,11 +6,11 @@ module Query = struct
 
   let get_all =
     unit ->* tup3
-      (tup2 (tup3 string string string) (tup2 string string))
+      (tup2 (tup3 string string string) (tup3 string string string))
       (tup3 string string string)
       (tup2 (tup4 int string bool bool) (tup4 bool bool int int)) @@
     "SELECT
-      r.id, t.id AS toilet_id, t.title, t.place, t.building,
+      r.id, t.id AS toilet_id, t.title, t.university, t.place, t.building,
       r.author AS author_id, u.username AS author_name, r.date,
       r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
     FROM cessadvisor.reviews r
@@ -30,11 +30,11 @@ module Query = struct
 
   let get_by_toilet =
     string ->* tup3
-      (tup2 (tup3 string string string) (tup2 string string))
+      (tup2 (tup3 string string string) (tup3 string string string))
       (tup3 string string string)
       (tup2 (tup4 int string bool bool) (tup4 bool bool int int)) @@
     "SELECT
-      r.id, t.id AS toilet_id, t.title, t.place, t.building,
+      r.id, t.id AS toilet_id, t.title, t.university, t.place, t.building,
       r.author AS author_id, u.username AS author_name, r.date,
       r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
     FROM cessadvisor.reviews r
@@ -48,6 +48,7 @@ module Models = struct
     id            : string;
     toilet_id     : string;
     title         : string;
+    university    : string;
     place         : string;
     building      : string;
     author_id     : string;
@@ -87,11 +88,11 @@ let get_all _ =
   let logic () =
     let%lwt toilets = DB.collect Q.get_all () in
     List.map (fun (
-      ((id, toilet_id, title), (place, building)),
+      ((id, toilet_id, title), (university, place, building)),
       (author_id, author_name, date),
       ((rating, description, paper, soap), (dryer, hotwater, clean, temperature))
     ) -> M.yojson_of_get M.({
-      id; toilet_id; title; place; building;
+      id; toilet_id; title; university; place; building;
       author_id; author_name; date;
       rating; description; paper; soap; dryer; hotwater; clean; temperature
     })) toilets
@@ -122,11 +123,11 @@ let get_by_toilet req =
   let logic toilet_id =
     let%lwt toilets = DB.collect Q.get_by_toilet toilet_id in
     List.map (fun (
-      ((id, toilet_id, title), (place, building)),
+      ((id, toilet_id, title), (university, place, building)),
       (author_id, author_name, date),
       ((rating, description, paper, soap), (dryer, hotwater, clean, temperature))
     ) -> M.yojson_of_get M.({
-      id; toilet_id; title; place; building;
+      id; toilet_id; title; university; place; building;
       author_id; author_name; date;
       rating; description; paper; soap; dryer; hotwater; clean; temperature
     })) toilets
