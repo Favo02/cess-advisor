@@ -4,17 +4,11 @@ import f from "../utils/customFetch"
 
 export async function load() {
 
-  const stats = await f.get(`${env.API_URL}/api/stats`, {})
+  const data = await f.get(`${env.API_URL}/api/stats`, {})
 
-  if (!stats.ok) {
+  if (!data.ok) {
     return error(500, "Error fetching homepage, please try again later.")
   }
 
-  const issues = await f.get(`https://api.github.com/repos/Favo02/cess-advisor/issues`, {})
-
-  if (!issues.ok) {
-    issues.json = []
-  }
-
-  return { stats: stats.json, issues: issues.json }
+  return { stats: data.json }
 }
