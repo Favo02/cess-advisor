@@ -7,9 +7,9 @@ module Query = struct
   let stats =
     unit ->! tup3 int int int @@
       "SELECT
-        (SELECT COUNT(*) FROM users) AS users,
-        (SELECT COUNT(*) FROM toilets) AS toilets,
-        (SELECT COUNT(*) FROM reviews) AS reviews"
+        (SELECT COUNT(*) FROM cessadvisor.users) AS users,
+        (SELECT COUNT(*) FROM cessadvisor.toilets) AS toilets,
+        (SELECT COUNT(*) FROM cessadvisor.reviews) AS reviews"
 end
 
 module Models = struct

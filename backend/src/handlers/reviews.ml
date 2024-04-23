@@ -13,9 +13,9 @@ module Query = struct
       r.id, t.id AS toilet_id, t.title, t.place, t.building,
       r.author AS author_id, u.username AS author_name, r.date,
       r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
-    FROM reviews r
-    INNER JOIN toilets t ON r.toilet = t.id
-    INNER JOIN users u ON r.author = u.id
+    FROM cessadvisor.reviews r
+    INNER JOIN cessadvisor.toilets t ON r.toilet = t.id
+    INNER JOIN cessadvisor.users u ON r.author = u.id
     ORDER BY date DESC"
 
   let create =
@@ -24,7 +24,7 @@ module Query = struct
       (tup4 bool bool bool bool)
       (tup2 int int)
     ->. unit @@
-    "INSERT INTO reviews
+    "INSERT INTO cessadvisor.reviews
       (author, toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
@@ -37,9 +37,9 @@ module Query = struct
       r.id, t.id AS toilet_id, t.title, t.place, t.building,
       r.author AS author_id, u.username AS author_name, r.date,
       r.rating, r.description, r.paper, r.soap, r.dryer, r.hotwater, r.clean, r.temperature
-    FROM reviews r
-    INNER JOIN toilets t ON r.toilet = t.id
-    INNER JOIN users u ON r.author = u.id
+    FROM cessadvisor.reviews r
+    INNER JOIN cessadvisor.toilets t ON r.toilet = t.id
+    INNER JOIN cessadvisor.users u ON r.author = u.id
     WHERE t.id = ?"
 end
 

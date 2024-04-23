@@ -13,9 +13,9 @@ module Query = struct
       t.id, u.username AS creator_name, t.creator AS creator_id, t.creation AS creation_date,
       t.title, t.university, t.building, t.place, t.description,
       AVG(r.rating) AS rating, COUNT(r.rating) as reviews_count
-    FROM toilets t
-    INNER JOIN users u ON t.creator = u.id
-    LEFT JOIN reviews r ON t.id = r.toilet
+    FROM cessadvisor.toilets t
+    INNER JOIN cessadvisor.users u ON t.creator = u.id
+    LEFT JOIN cessadvisor.reviews r ON t.id = r.toilet
     WHERE t.id = ?
     GROUP BY t.id, u.username"
 
@@ -28,9 +28,9 @@ module Query = struct
       t.id, u.username AS creator_name, t.creator AS creator_id, t.creation AS creation_date,
       t.title, t.university, t.building, t.place, t.description,
       AVG(r.rating) AS rating, COUNT(r.rating) as reviews_count
-    FROM toilets t
-    INNER JOIN users u ON t.creator = u.id
-    LEFT JOIN reviews r ON t.id = r.toilet
+    FROM cessadvisor.toilets t
+    INNER JOIN cessadvisor.users u ON t.creator = u.id
+    LEFT JOIN cessadvisor.reviews r ON t.id = r.toilet
     GROUP BY t.id, u.username
     ORDER BY reviews_count DESC"
 
@@ -39,7 +39,7 @@ module Query = struct
       (tup3 string string string)
       (tup3 string string string)
     ->. unit @@
-    "INSERT INTO toilets
+    "INSERT INTO cessadvisor.toilets
       (creator, title, university, building, place, description)
     VALUES (?, ?, ?, ?, ?, ?)"
 end
