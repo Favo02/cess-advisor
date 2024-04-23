@@ -1,4 +1,7 @@
-// wrapper around fetch, returns { ok, status, json, headers }
+// wrappers around fetch (GET and POST methods)
+// always return an object, even in case of error:
+// { ok: true|false, status: number, json: object, headers: object }
+
 async function get(url, headers) {
 
   try {
@@ -15,7 +18,6 @@ async function get(url, headers) {
     console.log(err)
     return { ok: false, status: 500, json: { "error": "API unavailable" }, headers: null }
   }
-
 }
 
 async function post(url, headers, body) {
@@ -38,7 +40,6 @@ async function post(url, headers, body) {
     console.log(err)
     return { ok: false, status: 500, json: { "error": "API unavailable" }, headers: null }
   }
-
 }
 
 export default { get, post }
