@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add university edition branding
 - round average rating (issue #15)
 - dynamically fetch know issues
+- add university field to toilets
 
 ## Changelog init (Version 1.0)
 
