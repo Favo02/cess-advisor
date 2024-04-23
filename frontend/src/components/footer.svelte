@@ -13,7 +13,7 @@
   <nav>
     <div class="flex flex-col justify-center gap-4">
       <a href="/" class="flex justify-center"><img src="/logo.png" alt="CessAdvisor logo" class="h-12"></a>
-      <h1>CessAdvisor</h1>
+      <h1>CessAdvisor - University edition</h1>
     </div>
   </nav>
   <aside>

@@ -57,7 +57,7 @@
           {/each}
         </div>
         <div class="text-md font-bold">
-          <span class="text-primary text-lg">{rating / 2}</span> based on {reviews_count} reviews
+          <span class="text-primary text-lg">{parseFloat((rating / 2).toFixed(2))}</span> based on {reviews_count} reviews
         </div>
       </div>
     {/if}

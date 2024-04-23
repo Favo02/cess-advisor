@@ -17,7 +17,10 @@
         <li><a href="/login">Login</a></li>
       </ul>
     </div>
-    <a href="/" class="btn btn-ghost text-xl text-primary ml-4">CessAdvisor</a>
+    <div class="relative">
+      <a href="/" class="btn btn-ghost text-xl text-primary ml-4">CessAdvisor</a>
+      <p class="absolute uppercase text-xs bottom-0 -right-[4px] text-primary font-black -rotate-[3deg] opacity-60">UNIVERSITY EDITION</p>
+    </div>
   </div>
 
   <div class="navbar-center hidden lg:flex font-medium">
