@@ -11,9 +11,11 @@
 
 <div class="w-full py-60 bg-base-300">
 
-  <div class="opacity-40 mx-auto mb-8 text-center max-w-[300px] rounded-md border-2 border-red-600 bg-red-400 px-10 py-2 text-black">
-    <a href="https://github.com/Favo02/cess-advisor/issues" target="_blank" class="link">Known issues <Icon icon="fa:external-link-square" class="inline w-3 h-3"/>
-  </div>
+  {#if data.issues.length > 0}
+    <div class="opacity-40 mx-auto mb-8 text-center max-w-[300px] rounded-md border-2 border-red-600 bg-red-400 px-10 py-2 text-black">
+      <a href="https://github.com/Favo02/cess-advisor/issues" target="_blank" class="link">{data.issues.length} Known issues <Icon icon="fa:external-link-square" class="inline w-3 h-3"/>
+    </div>
+  {/if}
   <h1 class="mx-auto text-5xl text-center mb-3 font-bold">Know the <span class="text-primary">toilets</span> around you</h1>
   <p class="py-6 text-center">Spread and gain knowledge about the arguably <span class="text-primary">most important room</span> in a building.</p>
   <div class="w-full flex justify-center">
