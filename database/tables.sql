@@ -9,6 +9,7 @@ CREATE TABLE toilets (
   creator       uuid NOT NULL REFERENCES users(id),
   creation      TIMESTAMPTZ NOT NULL DEFAULT now(),
   title         TEXT NOT NULL CHECK (title ~ '^[\t\n\x20-\xFF]{6,50}$'),
+  university    TEXT NOT NULL CHECK (university ~ '^[\t\n\x20-\xFF]{6,50}$'),
   building      TEXT NOT NULL CHECK (building ~ '^[\t\n\x20-\xFF]{6,50}$'),
   place         TEXT NOT NULL CHECK (place ~ '^[\t\n\x20-\xFF]{6,50}$'),
   description   TEXT NOT NULL CHECK (description ~ '^[\t\n\x20-\xFF]{6,250}$')
