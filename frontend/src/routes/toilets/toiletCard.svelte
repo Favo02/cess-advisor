@@ -9,6 +9,7 @@
     creator_id,
     creation_date,
     title,
+    university,
     building,
     place,
     description,
@@ -35,6 +36,7 @@
   <div class="block bg-base-100 shadow-lg shadow-primary/20 rounded-lg overflow-hidden">
 
     <div class="p-4">
+      <p class="text-xs font-bold mb-2 uppercase text-center">{university}</p>
       <h2 class="mt-2 mb-2 font-bold text-primary"><a href="/reviews?q={id}" class="link">{title || "Unnamed toilet"}</a>
         {#if reviews_count > 0}
           <span class="{goodness[Math.round(rating / 2)][1]} {goodness[Math.round(rating / 2)][2]} inline ml-2 px-2 py-1 leading-none rounded-full font-semibold uppercase tracking-wide text-xs">{goodness[Math.round(rating / 2)][0]}</span>
