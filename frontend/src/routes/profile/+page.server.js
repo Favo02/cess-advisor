@@ -9,7 +9,7 @@ export async function load({ cookies }) {
 
   if (!data.ok) {
     if (data.status === 401) {
-      return redirect(302, "/login?r=401") // redirect after login
+      return redirect(302, "/login?r=401&to=/profile")
     }
 
     return error(500, "Error fetching profile, please try again later.")

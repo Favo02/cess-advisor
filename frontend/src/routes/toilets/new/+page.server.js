@@ -10,7 +10,7 @@ export async function load({ cookies }) {
 
   if (!data.ok) {
     if (data.status === 401) {
-      return redirect(302, "/login?r=401") // TODO: redirect
+      return redirect(302, "/login?r=401&to=/toilets/new")
     }
 
     return error(500, "Error fetching user, please try again later.")
@@ -46,7 +46,7 @@ export const actions = {
 
     if (!response.ok) {
       if (data.status === 401) {
-        return redirect(302, "/login?r=401") // TODO: redirect
+        return redirect(302, "/login?r=401&to=/toilets/new")
       }
       if (response.status === 400) {
         return fail(400, { error: "Error creating toilet" })
