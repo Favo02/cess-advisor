@@ -10,7 +10,7 @@ export async function load({ params, cookies }) {
 
   if (!data.ok) {
     if (data.status === 401) {
-      return redirect(302, "/login") // TODO: notification, redirect
+      return redirect(302, "/login?r=401") // TODO: redirect
     }
 
     return error(500, "Error fetching user, please try again later.")
@@ -50,7 +50,7 @@ export const actions = {
 
     if (!response.ok) {
       if (data.status === 401) {
-        return redirect(302, "/login") // TODO: notification, redirect
+        return redirect(302, "/login?r=401") // TODO: redirect
       }
       if (response.status === 400) {
         return fail(400, { error: "Error creating review" })
@@ -60,6 +60,6 @@ export const actions = {
     }
 
 
-		return redirect(302, `/reviews?q=${toilet}`) // TODO: notification
+		return redirect(302, `/reviews?r=203&q=${toilet}`)
   }
 }

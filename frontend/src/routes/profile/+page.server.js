@@ -9,7 +9,7 @@ export async function load({ cookies }) {
 
   if (!data.ok) {
     if (data.status === 401) {
-      return redirect(302, "/login") // TODO: notification, redirect
+      return redirect(302, "/login?r=401") // redirect after login
     }
 
     return error(500, "Error fetching profile, please try again later.")
@@ -41,6 +41,6 @@ export const actions = {
       httpOnly: true
     })
 
-		return redirect(302, "/") // TODO: notification
+		return redirect(302, "/?r=202")
   }
 }
