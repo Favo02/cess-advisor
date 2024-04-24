@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - round average rating (issue #15)
 - dynamically fetch know issues
 - add university field to toilets
+- notification after redirect
+- redirect to requested page after login/registration
+- make theme persistent (save in local storage)
 
 ## Changelog init (Version 1.0)
 
