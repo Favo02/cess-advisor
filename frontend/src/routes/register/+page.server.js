@@ -26,6 +26,7 @@ export const actions = {
 
 		const username = data.get("username")
 		const password = data.get("password")
+    const to = data.get("to") || "/profile"
 
     const valid = schemas.login.safeParse({ username, password })
     if (!valid.success) {
@@ -60,6 +61,6 @@ export const actions = {
       httpOnly: true
     })
 
-		return redirect(302, "/profile?r=201")
+		return redirect(302, `${to}?r=201`)
 	}
 }
