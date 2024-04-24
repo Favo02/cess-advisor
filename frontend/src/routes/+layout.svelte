@@ -3,8 +3,10 @@
   import Header from "../components/header.svelte"
   import Footer from "../components/footer.svelte"
   import { page } from "$app/stores"
-  import { Toaster } from "svelte-french-toast"
+  import toast, { Toaster } from "svelte-french-toast"
   import { onMount, afterUpdate } from "svelte"
+  import { replaceState } from "$app/navigation"
+  import codes from "../utils/redirectCodes"
 
   let route = ""
 
@@ -13,6 +15,27 @@
 
   function pageLoad() {
     route = $page.url.pathname
+
+    let redirectStatus = $page.url.searchParams.get("r")
+    if (redirectStatus) {
+      if (codes[redirectStatus].isError) {
+        toast.error(codes[redirectStatus].msg)
+      } else {
+        toast.success(codes[redirectStatus].msg)
+      }
+    }
+
+    // TODO: bad workaround to avoid "double" redirection issues
+    setTimeout(() => {
+      if (redirectStatus) {
+        $page.url.searchParams.delete("r")
+        if ($page.url.searchParams.toString() === "") {
+          replaceState(route)
+        } else {
+          replaceState(`${route}?${$page.url.searchParams.toString()}`)
+        }
+      }
+    }, 100);
   }
 </script>
 
