@@ -6,11 +6,14 @@
   import Icon from "@iconify/svelte"
   import toast from "svelte-french-toast"
   import schemas from "../../utils/schemas"
+  import { onMount } from "svelte"
+  import { page } from "$app/stores"
 
   export let form
 
   let username = ""
   let password = ""
+  let to = ""
 
   function clientVerification(event) {
     const valid = schemas.login.safeParse({ username, password })
@@ -25,6 +28,10 @@
   if (form?.error) {
     toast.error(form.error)
   }
+
+  onMount(() => {
+    to = $page.url.searchParams.get("to")
+  })
 </script>
 
 <div class="w-full py-28 bg-base-300">
@@ -32,6 +39,8 @@
   <p class="mx-auto text-lg text-center mb-10 italic">Don't have an account? <a href="/register" class="text-primary link">Register</a>.</p>
 
   <form class="max-w-sm mx-auto" method="POST" action="?/login" on:submit|preventDefault={(event) => clientVerification(event)}>
+
+    <input type="hidden" name="to" bind:value={to}>
 
     <div class="pb-6">
       <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Username</label>
@@ -58,7 +67,7 @@
       Login
     </button>
     <div class="flex">
-      <a href="/register" class="btn btn-primary btn-outline mx-auto w-[calc(50%-8px)] mr-2 mb-8">
+      <a href={(to !== "") ? `/register?to=${to}` : "/register"} class="btn btn-primary btn-outline mx-auto w-[calc(50%-8px)] mr-2 mb-8">
         <Icon icon="mdi:register" class="w-6 h-6" />
         Register
       </a>

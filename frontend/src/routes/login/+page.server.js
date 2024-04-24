@@ -9,7 +9,7 @@ export async function load({ cookies }) {
   const data = await f.get(`${env.API_URL}/api/login/verify`, headers)
 
   if (data.ok) {
-    return redirect(302, "/profile") // TODO: notification
+    return redirect(302, "/profile?r=402")
   }
   if (!data.ok && data.status !== 401) {
     return error(500, "Error fetching user, please try again later.")
@@ -26,6 +26,7 @@ export const actions = {
 
 		const username = data.get("username")
 		const password = data.get("password")
+    const to = data.get("to") || "/profile"
 
     const valid = schemas.login.safeParse({ username, password })
     if (!valid.success) {
@@ -60,6 +61,6 @@ export const actions = {
       httpOnly: true
     })
 
-		return redirect(302, "/profile") // TODO: notification
+		return redirect(302, `${to}?r=201`)
 	}
 }
