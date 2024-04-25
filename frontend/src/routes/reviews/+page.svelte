@@ -18,15 +18,17 @@
   }
 
   function isValid(review) {
-    const { toilet_id, title, university, place, building, author_name, description } = review
+    let lowFilter = filter.toLowerCase()
+    const { toilet_id, title, university, place, building, author_name, author_id, description } = review
     return (
-      toilet_id.toLowerCase().includes(filter) ||
-      title.toLowerCase().includes(filter) ||
-      university.toLowerCase().includes(filter) ||
-      place.toLowerCase().includes(filter) ||
-      building.toLowerCase().includes(filter) ||
-      author_name.toLowerCase().includes(filter) ||
-      description.toLowerCase().includes(filter)
+      toilet_id.toLowerCase().includes(lowFilter) ||
+      title.toLowerCase().includes(lowFilter) ||
+      university.toLowerCase().includes(lowFilter) ||
+      place.toLowerCase().includes(lowFilter) ||
+      building.toLowerCase().includes(lowFilter) ||
+      author_name.toLowerCase().includes(lowFilter) ||
+      author_id.toLowerCase().includes(lowFilter) ||
+      description.toLowerCase().includes(lowFilter)
     )
   }
 
@@ -35,7 +37,7 @@
 
 <div class="w-full py-28 bg-base-300">
   <h1 class="mx-auto text-4xl text-center mb-3 font-bold"><span class="text-primary">Reviews</span> available</h1>
-  <p class="mx-auto text-lg text-center mb-10 italic">Visit <a href="/toilets" class="text-primary link">/toilets</a> page to leave a review.</p>
+  <p class="mx-auto text-lg text-center mb-10 italic">Visit <a href="/toilets" class="text-primary link font-bold">toilets</a> page to leave a <span class="font-bold">review</span>.</p>
 
   <div class="flex flex-col max-w-[90%] mx-auto justify-center md:flex-row">
     <label class="input input-bordered flex items-center gap-2 max-w-[600px] md:mx-8 mb-2">

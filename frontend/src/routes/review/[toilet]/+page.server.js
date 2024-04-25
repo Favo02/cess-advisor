@@ -16,7 +16,13 @@ export async function load({ params, cookies }) {
     return error(500, "Error fetching user, please try again later.")
   }
 
-  return { toilet: params.toilet }
+  const toilet = await f.get(`${env.API_URL}/api/toilets/${params.toilet}`, {})
+
+  if (!toilet.ok) {
+    return error(500, "Error fetching toilet, please try again later.")
+  }
+
+  return { toilet: toilet.json }
 }
 
 export const actions = {
