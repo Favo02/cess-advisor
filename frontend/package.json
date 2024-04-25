@@ -12,6 +12,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
+    "@ernane/svelte-star-rating": "^1.1.7",
     "@iconify/svelte": "^3.1.6",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
