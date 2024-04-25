@@ -5,19 +5,30 @@
 <script>
   import ToiletCard from "./toiletCard.svelte"
   import Icon from "@iconify/svelte"
+  import { replaceState } from "$app/navigation"
+  import { page } from "$app/stores"
 
   export let data
 
-  let filter = ""
+  let filter = $page.url.searchParams.get("q") || ""
+
+  function updateFilter(event) {
+    replaceState(`/toilets?q=${event.target.value}`)
+    filter = event.target.value
+  }
 
   function isValid(toilet) {
-    const { title, university, place, building, description } = toilet
+    let lowFilter = filter.toLowerCase()
+    const { id, title, university, place, building, creator_name, creator_id, description } = toilet
     return (
-      title.toLowerCase().includes(filter) ||
-      university.toLowerCase().includes(filter) ||
-      place.toLowerCase().includes(filter) ||
-      building.toLowerCase().includes(filter) ||
-      description.toLowerCase().includes(filter)
+      id.toLowerCase().includes(lowFilter) ||
+      title.toLowerCase().includes(lowFilter) ||
+      university.toLowerCase().includes(lowFilter) ||
+      place.toLowerCase().includes(lowFilter) ||
+      building.toLowerCase().includes(lowFilter) ||
+      creator_name.toLowerCase().includes(lowFilter) ||
+      creator_id.toLowerCase().includes(lowFilter) ||
+      description.toLowerCase().includes(lowFilter)
     )
   }
 </script>
@@ -28,12 +39,12 @@
 
   <div class="flex flex-col max-w-[90%] mx-auto justify-center md:flex-row">
     <label class="input input-bordered flex items-center gap-2 max-w-[600px] md:ml-[150px] md:mr-8 mb-2">
-      <input type="text" class="grow min-w-[400px]" placeholder="Search" on:input={(event) => filter = event.target.value} />
+      <input type="text" class="grow min-w-[400px]" placeholder="Search" on:input={updateFilter} />
       <Icon icon="ic:baseline-search" class="w-6 h-6" />
     </label>
     <a href="/toilets/new" class="btn btn-primary">New toilet</a>
   </div>
-  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by <b>title</b>, <b>university</b>, <b>place</b>, <b>building</b> or <b>description</b>!</h3>
+  <h3 class="mx-auto text-sm text-center mb-10 italic">Filter by <b>title</b>, <b>university</b>, <b>place</b>, <b>building</b>, <b>description</b> or <b>creator</b>!</h3>
 
   <div class="max-w-[1300px] mx-auto flex flex-col md:flex-row justify-center">
 
