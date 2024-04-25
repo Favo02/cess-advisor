@@ -18,15 +18,17 @@
   }
 
   function isValid(review) {
-    const { toilet_id, title, university, place, building, author_name, description } = review
+    let lowFilter = filter.toLowerCase()
+    const { toilet_id, title, university, place, building, author_name, author_id, description } = review
     return (
-      toilet_id.toLowerCase().includes(filter) ||
-      title.toLowerCase().includes(filter) ||
-      university.toLowerCase().includes(filter) ||
-      place.toLowerCase().includes(filter) ||
-      building.toLowerCase().includes(filter) ||
-      author_name.toLowerCase().includes(filter) ||
-      description.toLowerCase().includes(filter)
+      toilet_id.toLowerCase().includes(lowFilter) ||
+      title.toLowerCase().includes(lowFilter) ||
+      university.toLowerCase().includes(lowFilter) ||
+      place.toLowerCase().includes(lowFilter) ||
+      building.toLowerCase().includes(lowFilter) ||
+      author_name.toLowerCase().includes(lowFilter) ||
+      author_id.toLowerCase().includes(lowFilter) ||
+      description.toLowerCase().includes(lowFilter)
     )
   }
 
