@@ -51,6 +51,18 @@
       </div>
     </div>
 
+    <div class="flex flex-row">
+      <a href="/toilets?q={data.profile.user_id}" class="rounded-lg btn btn-primary btn-outline mx-auto w-[calc(50%-16px)] mr-4 mb-8">
+        <Icon icon="mingcute:toilet-paper-fill" class="w-6 h-6" />
+        Your toilets
+      </a>
+
+      <a href="/reviews?q={data.profile.user_id}" class="rounded-lg btn btn-primary btn-outline mx-auto w-[calc(50%-16px)] ml-4 mb-8">
+        <Icon icon="material-symbols:reviews" class="w-6 h-6" />
+        Your reviews
+      </a>
+    </div>
+
     <button disabled class="btn btn-primary btn-outline mx-auto w-full mb-8">
       <Icon icon="lucide:edit" class="w-6 h-6" />
       Edit profile <span class="italic">(coming soon)</span>
