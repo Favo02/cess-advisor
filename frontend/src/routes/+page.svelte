@@ -32,8 +32,8 @@
   <h1 class="mx-auto text-5xl text-center mb-3 font-bold">Know the <span class="text-primary">toilets</span> around you</h1>
   <p class="py-6 text-center">Spread and gain knowledge about the arguably <span class="text-primary">most important room</span> in a building.</p>
   <div class="w-full flex justify-center">
-    <a href="/toilets" role="button" class="btn btn-outline mr-3 mt-10">View Toilets</a>
-    <a href="/login" role="button" class="btn btn-primary mt-10 ml-3">Login and leave a review</a>
+    <a href="/reviews" role="button" class="min-w-[150px] btn btn-outline mr-3 mt-10">Reviews</a>
+    <a href="/toilets" role="button" class="min-w-[150px] btn btn-primary mt-10 ml-3">Toilets</a>
   </div>
 
   <div class="w-full bg-base-300 flex justify-center pt-32">

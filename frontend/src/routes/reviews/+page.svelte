@@ -35,7 +35,7 @@
 
 <div class="w-full py-28 bg-base-300">
   <h1 class="mx-auto text-4xl text-center mb-3 font-bold"><span class="text-primary">Reviews</span> available</h1>
-  <p class="mx-auto text-lg text-center mb-10 italic">Visit <a href="/toilets" class="text-primary link">/toilets</a> page to leave a review.</p>
+  <p class="mx-auto text-lg text-center mb-10 italic">Visit <a href="/toilets" class="text-primary link font-bold">toilets</a> page to leave a <span class="font-bold">review</span>.</p>
 
   <div class="flex flex-col max-w-[90%] mx-auto justify-center md:flex-row">
     <label class="input input-bordered flex items-center gap-2 max-w-[600px] md:mx-8 mb-2">

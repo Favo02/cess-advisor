@@ -65,51 +65,53 @@
       <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">6 - 250 characters, ASCII extendended, no emoji, no control characters except space and newline</p>
     </div>
 
-    <div class="mb-8">
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Toilet paper</label>
-      <div class="relative peer">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <Icon icon="mingcute:toilet-paper-fill" class="w-5 h-5" />
+    <div class="mb-8 flex flex-row justify-between text-center">
+      <div class="pr-10">
+        <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content pl-10">Toilet paper</label>
+        <div class="relative peer">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <Icon icon="mingcute:toilet-paper-fill" class="w-5 h-5" />
+          </div>
+          <h2 class="absolute ml-10">NO</h2>
+          <h2 class="absolute ml-36">YES</h2>
+          <input type="checkbox" name="paper" bind:checked={paper} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
         </div>
-        <h2 class="absolute ml-10">NO</h2>
-        <h2 class="absolute ml-36">YES</h2>
-        <input type="checkbox" name="paper" bind:checked={paper} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
+      </div>
+      <div class="pr-10">
+        <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content pl-10">Soap</label>
+        <div class="relative peer">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <Icon icon="ph:hand-soap-bold" class="w-5 h-5" />
+          </div>
+          <h2 class="absolute ml-10">NO</h2>
+          <h2 class="absolute ml-36">YES</h2>
+          <input type="checkbox" name="soap" bind:checked={soap} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
+        </div>
       </div>
     </div>
 
-    <div class="mb-8">
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Soap</label>
-      <div class="relative peer">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <Icon icon="ph:hand-soap-bold" class="w-5 h-5" />
+    <div class="mb-8 flex flex-row justify-between text-center">
+      <div class="pr-10">
+        <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content pl-10">Hands dryer</label>
+        <div class="relative peer">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <Icon icon="lucide:wind" class="w-5 h-5" />
+          </div>
+          <h2 class="absolute ml-10">NO</h2>
+          <h2 class="absolute ml-36">YES</h2>
+          <input type="checkbox" name="dryer" bind:checked={dryer} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
         </div>
-        <h2 class="absolute ml-10">NO</h2>
-        <h2 class="absolute ml-36">YES</h2>
-        <input type="checkbox" name="soap" bind:checked={soap} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
       </div>
-    </div>
-
-    <div class="mb-8">
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Hands dryer</label>
-      <div class="relative peer">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <Icon icon="lucide:wind" class="w-5 h-5" />
+      <div class="pr-10">
+        <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content pl-10">Hot water</label>
+        <div class="relative peer">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <Icon icon="carbon:temperature-water" class="w-5 h-5" />
+          </div>
+          <h2 class="absolute ml-10">NO</h2>
+          <h2 class="absolute ml-36">YES</h2>
+          <input type="checkbox" name="hotwater" bind:checked={hotwater} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
         </div>
-        <h2 class="absolute ml-10">NO</h2>
-        <h2 class="absolute ml-36">YES</h2>
-        <input type="checkbox" name="dryer" bind:checked={dryer} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
-      </div>
-    </div>
-
-    <div class="mb-8">
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Hot water</label>
-      <div class="relative peer">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <Icon icon="carbon:temperature-water" class="w-5 h-5" />
-        </div>
-        <h2 class="absolute ml-10">NO</h2>
-        <h2 class="absolute ml-36">YES</h2>
-        <input type="checkbox" name="hotwater" bind:checked={hotwater} class="toggle border border-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block ps-10 ml-20 p-2.5" />
       </div>
     </div>
 
