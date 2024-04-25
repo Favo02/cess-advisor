@@ -32,20 +32,25 @@ export const actions = {
 		const data = await request.formData()
 
     const toilet = data.get("toilet")
-    const rating = parseInt(data.get("rating"))
+    let rating = parseFloat(data.get("rating"))
     const description = data.get("description")
     const paper = !!data.get("paper")
     const soap = !!data.get("soap")
     const dryer = !!data.get("dryer")
     const hotwater = !!data.get("hotwater")
-    const clean = parseInt(data.get("clean"))
-    const temperature = parseInt(data.get("temperature"))
+    let clean = parseFloat(data.get("clean"))
+    let temperature = parseFloat(data.get("temperature"))
 
     const valid = schemas.review.safeParse({ toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature })
     if (!valid.success) {
       const error = `Invalid ${valid.error.issues[0].path[0]}`
       return fail(400, { error })
     }
+
+    // convert to 10 scale (compatibility with API)
+    rating *= 2
+    clean *= 2
+    temperature *= 2
 
     const headers = { Cookie: `_session=${cookies.get("_session")}` }
     const response = await f.post(
