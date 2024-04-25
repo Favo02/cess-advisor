@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - notification after redirect
 - redirect to requested page after login/registration
 - make theme persistent (save in local storage)
+- various small UI/UX improvements
+- fetch and show toilet data on new review page
 
 ## Changelog init (Version 1.0)
 
