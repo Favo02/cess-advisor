@@ -10,7 +10,7 @@
   export let data
   export let form
 
-  let toilet = data.toilet
+  let toilet = data.toilet.id
   let rating = 0
   let description = ""
   let paper = false
@@ -42,6 +42,36 @@
   <form class="max-w-sm mx-auto" method="POST" action="?/review" on:submit|preventDefault={(event) => clientVerification(event)}>
 
     <input type="hidden" name="toilet" bind:value={toilet}>
+
+    <div class="mb-8">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Toilet</label>
+      <div class="relative peer">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <Icon icon="mingcute:toilet-paper-fill" class="w-5 h-5" />
+        </div>
+        <input type="text" readonly class="opacity-40 bg-base-100 border border-base-content/20 text-base-content text-sm rounded-lg focus-within:outline-none block w-full ps-10 p-2.5" value={data.toilet.title}>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">University</label>
+      <div class="relative peer">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <Icon icon="mdi:university" class="w-5 h-5" />
+        </div>
+        <input type="text" readonly class="opacity-40 bg-base-100 border border-base-content/20 text-base-content text-sm rounded-lg focus-within:outline-none block w-full ps-10 p-2.5" value={data.toilet.university}>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Place and building</label>
+      <div class="relative peer">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <Icon icon="clarity:building-solid" class="w-5 h-5" />
+        </div>
+        <input type="text" readonly class="opacity-40 bg-base-100 border border-base-content/20 text-base-content text-sm rounded-lg focus-within:outline-none block w-full ps-10 p-2.5" value={`${data.toilet.place} - ${data.toilet.building}`}>
+      </div>
+    </div>
 
     <div>
       <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Rating (0 to 10)</label>
