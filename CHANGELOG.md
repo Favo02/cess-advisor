@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - make theme persistent (save in local storage)
 - various small UI/UX improvements
 - fetch and show toilet data on new review page
+- use `svelte-star-rating` component instead of hardcoded icons for rating display
+- add `svelte-star-rating` component instead of number input for rating, clean, temperature input
 
 ## Changelog init (Version 1.0)
 

@@ -8,14 +8,14 @@ const login = z.object({
 
 const review = z.object({
   toilet: z.string().uuid(),
-  rating: z.number().int().min(0).max(10),
+  rating: z.number().multipleOf(0.5).min(0).max(5),
   description: z.string().regex(regex.genericLongText),
   paper: z.boolean(),
   soap: z.boolean(),
   dryer: z.boolean(),
   hotwater: z.boolean(),
-  clean: z.number().int().min(0).max(10),
-  temperature: z.number().int().min(0).max(10),
+  clean: z.number().multipleOf(0.5).min(0).max(5),
+  temperature: z.number().multipleOf(0.5).min(0).max(5),
 })
 
 const toilet = z.object({

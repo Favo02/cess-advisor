@@ -6,19 +6,20 @@
   import Icon from "@iconify/svelte"
   import toast from "svelte-french-toast"
   import schemas from "../../../utils/schemas"
+  import StarRating from "@ernane/svelte-star-rating"
 
   export let data
   export let form
 
   let toilet = data.toilet.id
-  let rating = 0
+  let rating = 3.5
   let description = ""
   let paper = false
   let soap = false
   let dryer = false
   let hotwater = false
-  let clean = 0
-  let temperature = 0
+  let clean = 2.5
+  let temperature = 4.5
 
   function clientVerification(event) {
     const valid = schemas.review.safeParse({ toilet, rating, description, paper, soap, dryer, hotwater, clean, temperature })
@@ -73,15 +74,40 @@
       </div>
     </div>
 
-    <div>
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Rating (0 to 10)</label>
-      <div class="relative peer">
+    <div class="mb-4">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Rating</label>
+      <div class="relative peer bg-base-100 py-4 rounded border border-base-content">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
           <Icon icon="ph:star-fill" class="w-5 h-5" />
         </div>
-        <input type="number" name="rating" bind:value={rating} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="0">
+        <div class="mr-5">
+          <StarRating
+            on:change={() => rating = parseFloat(document.querySelector("input[name=rating]").value)}
+            config={{
+              readOnly: false,
+              countStars: 5,
+              range: {
+                min: 0,
+                max: 5,
+                step: 0.5
+              },
+              score: rating,
+              showScore: false,
+              scoreFormat: undefined,
+              name: "rating",
+              starConfig: {
+                size: 24,
+                fillColor: "oklch(var(--p))",
+                strokeColor: "oklch(var(--p))",
+                unfilledColor: "oklch(var(--b3))",
+                strokeUnfilledColor: "oklch(var(--b3))"
+              }
+            }}
+          />
+          <p class="absolute right-10 top-4">{rating} / 5</p>
+        </div>
       </div>
-      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">An integer value between 0 and 10, it will be scaled down to 5.</p>
+      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">Click on the stars or scroll with the mousewheel to set a value.</p>
     </div>
 
     <div>
@@ -145,26 +171,76 @@
       </div>
     </div>
 
-    <div>
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Cleanliness (0 to 10)</label>
-      <div class="relative peer">
+    <div class="mb-4">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Cleanliness</label>
+      <div class="relative peer bg-base-100 py-4 rounded border border-base-content">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
           <Icon icon="iconoir:sparks-solid" class="w-5 h-5" />
         </div>
-        <input type="number" name="clean" bind:value={clean} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="0">
+        <div class="mr-5">
+          <StarRating
+            on:change={() => clean = parseFloat(document.querySelector("input[name=clean]").value)}
+            config={{
+              readOnly: false,
+              countStars: 5,
+              range: {
+                min: 0,
+                max: 5,
+                step: 0.5
+              },
+              score: clean,
+              showScore: false,
+              scoreFormat: undefined,
+              name: "clean",
+              starConfig: {
+                size: 24,
+                fillColor: "oklch(var(--p))",
+                strokeColor: "oklch(var(--p))",
+                unfilledColor: "oklch(var(--b3))",
+                strokeUnfilledColor: "oklch(var(--b3))"
+              }
+            }}
+          />
+          <p class="absolute right-10 top-4">{clean} / 5</p>
+        </div>
       </div>
-      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">An integer value between 0 and 10, it will be scaled down to 5.</p>
+      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">Click on the stars or scroll with the mousewheel to set a value.</p>
     </div>
 
-    <div>
-      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Temperature (0 to 10)</label>
-      <div class="relative peer">
+    <div class="mb-4">
+      <label for="ignore" class="block mb-2 ml-2 text-md font-medium text-base-content">Temperature</label>
+      <div class="relative peer bg-base-100 py-4 rounded border border-base-content">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
           <Icon icon="bx:bxs-thermometer" class="w-5 h-5" />
         </div>
-        <input type="number" name="temperature" bind:value={temperature} class="bg-base-100 border border-base-content text-base-content text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5" placeholder="0">
+        <div class="mr-5">
+          <StarRating
+            on:change={() => temperature = parseFloat(document.querySelector("input[name=temperature]").value)}
+            config={{
+              readOnly: false,
+              countStars: 5,
+              range: {
+                min: 0,
+                max: 5,
+                step: 0.5
+              },
+              score: temperature,
+              showScore: false,
+              scoreFormat: undefined,
+              name: "temperature",
+              starConfig: {
+                size: 24,
+                fillColor: "oklch(var(--p))",
+                strokeColor: "oklch(var(--p))",
+                unfilledColor: "oklch(var(--b3))",
+                strokeUnfilledColor: "oklch(var(--b3))"
+              }
+            }}
+          />
+          <p class="absolute right-10 top-4">{temperature} / 5</p>
+        </div>
       </div>
-      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">An integer value between 0 and 10, it will be scaled down to 5.</p>
+      <p class="text-xs m-2 text-center opacity-60 invisible peer-focus-within:visible">Click on the stars or scroll with the mousewheel to set a value.</p>
     </div>
 
     <button class="btn btn-primary mx-auto w-full mb-8" type="submit">
