@@ -1,5 +1,5 @@
 <script>
-  import Icon from "@iconify/svelte"
+  import StarRating from "@ernane/svelte-star-rating"
 
   export let toilet
 
@@ -49,15 +49,27 @@
     </div>
 
     {#if reviews_count > 0}
-      <div class="p-4 text-xs text-neutral-content flex items-center justify-center gap-5">
-        <div class="rating">
-          {#each Array(Math.round(rating/2)) as _}
-            <Icon icon="ic:baseline-star" class="w-6 h-6 text-primary" />
-          {/each}
-          {#each Array(5 - Math.round(rating/2)) as _}
-            <Icon icon="ic:baseline-star" class="w-6 h-6 text-primary/20" />
-          {/each}
-        </div>
+      <div class="p-4 text-xs flex items-center justify-center gap-5">
+        <StarRating config={{
+          readOnly: true,
+          countStars: 5,
+          range: {
+            min: 0,
+            max: 5,
+            step: 0.5
+          },
+          score: rating / 2,
+          showScore: false,
+          scoreFormat: undefined,
+          name: "",
+          starConfig: {
+            size: 24,
+            fillColor: "oklch(var(--p))",
+            strokeColor: "oklch(var(--p))",
+            unfilledColor: "oklch(var(--b3))",
+            strokeUnfilledColor: "oklch(var(--b3))"
+          }
+        }} />
         <div class="text-md font-bold">
           <span class="text-primary text-lg">{parseFloat((rating / 2).toFixed(2))}</span> based on {reviews_count} reviews
         </div>
@@ -71,7 +83,7 @@
       <a href="/review/{id}" class="btn btn-primary">Review</a>
     </div>
 
-    <div class="p-4 flex items-center text-xs text-neutral-content/70">
+    <div class="p-4 flex items-center text-xs opacity-70">
       Created by {creator_name || "Anonymous"} on {formatDate(creation_date)}
     </div>
   </div>
